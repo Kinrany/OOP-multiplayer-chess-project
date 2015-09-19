@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bounce+", "Bounce+\Bounce+.csproj", "{CA308533-4E21-49D4-8AC7-48E1178150C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trivial", "Trivial\Trivial.csproj", "{185F7905-3198-4D77-8670-F281609BCEDC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA308533-4E21-49D4-8AC7-48E1178150C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA308533-4E21-49D4-8AC7-48E1178150C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA308533-4E21-49D4-8AC7-48E1178150C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA308533-4E21-49D4-8AC7-48E1178150C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{185F7905-3198-4D77-8670-F281609BCEDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{185F7905-3198-4D77-8670-F281609BCEDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{185F7905-3198-4D77-8670-F281609BCEDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{185F7905-3198-4D77-8670-F281609BCEDC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
