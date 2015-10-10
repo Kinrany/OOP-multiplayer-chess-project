@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using PlayerIO.GameLibrary;
 
 namespace BouncePlus {
-	[RoomType("Trivial v1.0")]
+	[RoomType("Trivial v1.1")]
 	public class Game : Game<Player> {
 
 		public override bool AllowUserJoin(Player player) {
@@ -35,7 +36,7 @@ namespace BouncePlus {
 						if (player.IsPlaying) {
 							player.Send("Denied", "You are already playing.");
 						}
-						Player target = PlayerByName(message.GetString(0));
+						Player target = FindPlayerByName(message.GetString(0));
 						if (target.IsPlaying) {
 							player.Send("Denied", "Target is already playing.");
 						}
@@ -51,22 +52,36 @@ namespace BouncePlus {
 			}
 		}
 
-		private Player PlayerByName(string name) {
-			foreach (var player in Players) {
-				if (player.ConnectUserId == name) {
-					return player;
-				}
-			}
-			return null;
+		private Player FindPlayerByName(string name) {
+			return Players.SingleOrDefault<Player>(
+				(p) => (p.ConnectUserId == name)
+			);
+
+			//// На случай, если ^ сломается
+			//
+			//foreach (var player in Players) {
+			//    if (player.ConnectUserId == name) {
+			//        return player;
+			//    }
+			//}
+			//return null;
 		}
 	}
 
 	public class Player : BasePlayer {
 
 		public void Initialize(Game game) {
-			this.game = game;
+			if (this.game == null) {
+				this.game = game;
+			}
+			else {
+				throw new InvalidOperationException("Player already initialized");
+			}
 		}
 
+		/// <summary>
+		/// Посылает игроку список со всеми остальными игроками.
+		/// </summary>
 		public void SendPlayerList() {
 			foreach (Player player in game.Players) {
 				if (player != this) {
@@ -75,12 +90,20 @@ namespace BouncePlus {
 			}
 		}
 
+		/// <summary>
+		/// Вызывает другого игрока на игру.
+		/// </summary>
+		/// <param name="other">Вызванный игрок.</param>
 		public void ChallengePlayer(Player other) {
+			if (other == this) {
+				this.Send("Denied", "You can't challenge yourself.");
+				return;
+			}
 			if (challenged != null) {
-				challenged.Send("ChallengeRevokedBy", this.ConnectUserId);
+				challenged.Send("Challenge revoked", this.ConnectUserId);
 			}
 			challenged = other;
-			other.Send("ChallengedBy", this.ConnectUserId);
+			other.Send("Challenged", this.ConnectUserId);
 
 			if (other.Challenged == this) {
 				GameModel.Create(this, other);
@@ -90,47 +113,66 @@ namespace BouncePlus {
 			}
 		}
 
+		/// <summary>
+		/// Играет ли игрок в данный момент.
+		/// </summary>
 		public bool IsPlaying {
 			get {
 				return (model != null);
 			}
 		}
+		/// <summary>
+		/// Игрок, вызванный на игру.
+		/// </summary>
 		public Player Challenged {
 			get {
 				return challenged;
 			}
 		}
 
-		public void GameStarted(GameModel model) {
+		public void GameCreated(GameModel model) {
 			this.model = model;
-			this.Send("GameStarted");
-		}
-		public void GameEnded() {
-			model = null;
-			this.Send("Game Ended");
+			model.OnGameEnded += GameEnded;
+			this.Send("Game started");
 		}
 
-		private Game game;
+
+		private Game game = null;
 		private Player challenged = null;
 		private GameModel model = null;
+
+		private void GameEnded() {
+			model = null;
+			this.Send("Game ended");
+		}
 	}
 
 	public class GameModel {
 
+		/// <summary>
+		/// Останавливает игру.
+		/// </summary>
+		public void Stop() {
+			OnGameEnded();
+		}
+
+		/// <summary>
+		/// Создаёт новую игру для двух игроков.
+		/// </summary>
+		/// <param name="player1">Первый игрок.</param>
+		/// <param name="player2">Второй игрок.</param>
+		public static void Create(Player player1, Player player2) {
+			GameModel model = new GameModel(player1, player2);
+			player1.GameCreated(model);
+			player2.GameCreated(model);
+		}
+
+		public delegate void GameEndDelegate();
+		public event GameEndDelegate OnGameEnded;
+
 		private GameModel(Player player1, Player player2) {
 			this.player1 = player1;
 			this.player2 = player2;
-		}
-
-		public void Stop() {
-			player1.GameEnded();
-			player2.GameEnded();
-		}
-
-		public static void Create(Player player1, Player player2) {
-			GameModel model = new GameModel(player1, player2);
-			player1.GameStarted(model);
-			player2.GameStarted(model);
 		}
 
 		Player player1, player2;
