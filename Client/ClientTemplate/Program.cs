@@ -7,8 +7,7 @@ namespace ClientNamespace {
 			gui = new GUI(networking);
 			gui.StartLoop();
 
-			while (!networking.IsInRoom);
-			while (networking.IsInRoom);
+			while (!gui.Esc);
 		}
 
 		static Networking networking;

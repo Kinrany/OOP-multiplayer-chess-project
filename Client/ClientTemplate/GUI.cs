@@ -6,6 +6,7 @@ namespace ClientNamespace {
 	class GUI {
 		public GUI(Networking networking) {
 			this.networking = networking;
+			Esc = false;
 
 			networking.OnDeniedMessage += OnDeniedMessage;
 			networking.OnUnknownMessage += OnUnknownMessage;
@@ -23,6 +24,10 @@ namespace ClientNamespace {
 			timer.Change(0, Timeout.Infinite);
 		}
 
+		public bool Esc {
+			get;
+			private set;
+		}
 
 		private void Loop(object o) {
 			// Выводит содержимое stringsToWrite в консоль
@@ -38,9 +43,9 @@ namespace ClientNamespace {
 			timer.Change(16, Timeout.Infinite);
 		}
 
-		private void ProcessCommand(string command) {
-			string[] split = command.Split(' ');
-			command = split[0];
+		private void ProcessCommand(string input) {
+			string[] split = input.Split(' ');
+			string command = split[0];
 
 			switch (command) {
 				case "":
@@ -65,9 +70,8 @@ namespace ClientNamespace {
 				case "connected":
 					AddString(networking.IsConnected.ToString());
 					break;
-				case "challenge":
-					networking.ChallengePlayer(split[1]);
-					AddString("Challenged player " + split[1]);
+				case "esc":
+					Esc = true;
 					break;
 				default:
 					AddString("Unknown command");
