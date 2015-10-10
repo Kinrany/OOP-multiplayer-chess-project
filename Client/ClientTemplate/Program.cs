@@ -3,12 +3,13 @@
 namespace ClientNamespace {
 	class Program {
 		static void Main(string[] args) {
-			networking = new Networking("kinrany");
+			networking = new Networking();
+			networking.Connect("John Doe");
 			gui = new GUI(networking);
 			gui.StartLoop();
 
-			while (!networking.Connected);
-			while (networking.Connected);
+			while (!networking.IsInRoom);
+			while (networking.IsInRoom);
 		}
 
 		static Networking networking;
