@@ -31,7 +31,7 @@ namespace BouncePlus {
 
 		public override void GotMessage(Player player, Message message) {
 			switch (message.Type) {
-				case "ChallengePlayer":
+				case "Challenge player":
 					try {
 						if (player.IsPlaying) {
 							player.Send("Denied", "You are already playing.");
