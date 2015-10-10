@@ -4,7 +4,6 @@ namespace ClientNamespace {
 	class Program {
 		static void Main(string[] args) {
 			networking = new Networking();
-			networking.Connect("John Doe");
 			gui = new GUI(networking);
 			gui.StartLoop();
 
