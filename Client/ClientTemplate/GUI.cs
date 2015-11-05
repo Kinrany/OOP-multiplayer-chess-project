@@ -55,7 +55,14 @@ namespace ClientNamespace {
 					if (split.Length >= 2) {
 						roomType = split[1];
 					}
-					networking.JoinRoom(roomType);
+
+					try {
+						networking.JoinRoom(roomType);
+					}
+					catch (Exception e) {
+						AddString(e.Message);
+					}
+
 					break;
 				case "joined":
 					AddString(networking.IsInRoom.ToString());
@@ -65,7 +72,14 @@ namespace ClientNamespace {
 					if (split.Length >= 2) {
 						playerName = split[1];
 					}
-					networking.Connect(playerName);
+
+					try {
+						networking.Connect(playerName);
+					}
+					catch (Exception e) {
+						AddString(e.Message);
+					}
+					
 					break;
 				case "connected":
 					AddString(networking.IsConnected.ToString());
