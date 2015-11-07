@@ -87,6 +87,9 @@ namespace ClientNamespace {
 				case "esc":
 					Esc = true;
 					break;
+				case "help":
+					AddString("Available commands: join, joined, connect, connected, help, esc.");
+					break;
 				default:
 					AddString("Unknown command");
 					break;
