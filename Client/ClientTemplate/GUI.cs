@@ -84,22 +84,30 @@ namespace ClientNamespace {
 			}
 		}
 
-		private void OnDeniedMessage(string text) {
+		private void OnDeniedMessage(string text) 
+		{
 			AddString("Denied: " + text);
 		}
-		private void OnUnknownMessage(string type) {
+		private void OnUnknownMessage(string type) 
+		{
 			AddString("Unknown message of type \"" + type + "\"");
 		}
-		private void OnConnect() {
+		private void OnConnect() 
+		{
 			AddString("Connected");
 		}
-		private void OnJoined() {
+		private void OnJoined() 
+		{
 			AddString("Joined room");
 		}
-
-		private void AddString(string str) 
+		private void OnChallengedMessage(string nemesis)
 		{
-			stringsToWrite.Enqueue(str);
+			AddString("Challenged by " + nemesis);
+		}
+
+		private void AddString(object obj) 
+		{
+			stringsToWrite.Enqueue(obj.ToString());
 		}
 
 		private Queue<string> stringsToWrite = new Queue<string>();

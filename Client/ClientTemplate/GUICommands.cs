@@ -26,7 +26,7 @@ namespace ClientNamespace
 		
 		void joined()
 		{
-			AddString(userData.IsInRoom.ToString());
+			AddString(userData.IsInRoom);
 		}
 		
 		void connect()
@@ -45,7 +45,7 @@ namespace ClientNamespace
 		
 		void connected()
 		{
-			AddString(userData.IsConnected.ToString());
+			AddString(userData.IsConnected);
 		}
 		
 		void esc()
