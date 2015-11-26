@@ -97,7 +97,8 @@ namespace ClientNamespace {
 			AddString("Joined room");
 		}
 
-		private void AddString(string str) {
+		private void AddString(string str) 
+		{
 			stringsToWrite.Enqueue(str);
 		}
 
