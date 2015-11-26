@@ -4,14 +4,16 @@ using System.Threading;
 
 namespace ClientNamespace {
 	class GUI {
-		public GUI(Networking networking) {
-			this.networking = networking;
+		public GUI(UserData userData) {
+			//this.userData. = userData.;
+			this.userData = userData;
 			Esc = false;
 
-			networking.OnDeniedMessage += OnDeniedMessage;
-			networking.OnUnknownMessage += OnUnknownMessage;
-			networking.OnJoinedRoom += OnJoined;
-			networking.OnConnected += OnConnect;
+			userData.OnDeniedMessage += OnDeniedMessage;
+			userData.OnUnknownMessage += OnUnknownMessage;
+			userData.OnJoinedRoom += OnJoined;
+			userData.OnConnected += OnConnect;
+			
 
 			// Таймер для регулярного вызова Loop
 			timer = new Timer(new TimerCallback(Loop));
@@ -57,7 +59,7 @@ namespace ClientNamespace {
 					}
 
 					try {
-						networking.JoinRoom(roomType);
+						userData.JoinRoom(roomType);
 					}
 					catch (Exception e) {
 						AddString(e.Message);
@@ -65,16 +67,13 @@ namespace ClientNamespace {
 
 					break;
 				case "joined":
-					AddString(networking.IsInRoom.ToString());
+					AddString(userData.IsInRoom.ToString());
 					break;
 				case "connect":
-					string playerName = "John Doe";
-					if (split.Length >= 2) {
-						playerName = split[1];
-					}
+					string playerName = userData.Name;
 
 					try {
-						networking.Connect(playerName);
+						userData.Connect(playerName);
 					}
 					catch (Exception e) {
 						AddString(e.Message);
@@ -82,10 +81,29 @@ namespace ClientNamespace {
 					
 					break;
 				case "connected":
-					AddString(networking.IsConnected.ToString());
+					AddString(userData.IsConnected.ToString());
 					break;
 				case "esc":
 					Esc = true;
+					break;
+				case "name":
+					if(userData.IsConnected)
+					{
+						AddString("You're already connected,you fool!");
+						break;
+					}
+					else
+					{
+						if (split.Length >= 2) 
+						{
+							userData.Name = split[1];
+                            AddString(userData.Name);
+						}
+						else
+						{
+							AddString("You came up short");
+						}
+					}
 					break;
 				case "help":
 					AddString("Available commands: join, joined, connect, connected, help, esc.");
@@ -114,7 +132,7 @@ namespace ClientNamespace {
 		}
 
 		private Queue<string> stringsToWrite = new Queue<string>();
-		private Networking networking;
+		private UserData userData;
 		private Timer timer;
 	}
 }
