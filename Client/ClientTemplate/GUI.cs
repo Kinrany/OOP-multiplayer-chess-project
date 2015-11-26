@@ -5,15 +5,20 @@ using System.Threading;
 namespace ClientNamespace {
 	partial class GUI {
 		public GUI(UserData userData) {
-			//this.userData. = userData.;
 			this.userData = userData;
 			Esc = false;
 
-			userData.OnDeniedMessage += OnDeniedMessage;
-			userData.OnUnknownMessage += OnUnknownMessage;
-			userData.OnJoinedRoom += OnJoined;
+			userData.OnChallengedMessage += OnChallengedMessage;
 			userData.OnConnected += OnConnect;
-			
+			userData.OnDeniedMessage += OnDeniedMessage;
+			userData.OnJoinedRoom += OnJoined;
+			userData.OnUnknownMessage += OnUnknownMessage;
+
+			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
+			userData.OnGameEndedMessage += OnUnhandledMessage;
+			userData.OnGameStartedMessage += OnUnhandledMessage;
+			userData.OnUserJoinedMessage += OnUnhandledMessage;
+			userData.OnUserLeftMessage += OnUnhandledMessage;
 
 			// Таймер для регулярного вызова Loop
 			timer = new Timer(new TimerCallback(Loop));
@@ -103,6 +108,14 @@ namespace ClientNamespace {
 		private void OnChallengedMessage(string nemesis)
 		{
 			AddString("Challenged by " + nemesis);
+		}
+		private void OnUnhandledMessage()
+		{
+			AddString("Unhandled message");
+		}
+		private void OnUnhandledMessage(string str)
+		{
+			AddString("Unhandled message: " + str);
 		}
 
 		private void AddString(object obj) 
