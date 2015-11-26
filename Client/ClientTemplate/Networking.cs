@@ -47,6 +47,8 @@ namespace ClientNamespace {
 				throw new InvalidOperationException("Нет соединения с сервером");
 			}
 
+			//client.Multiplayer.DevelopmentServer = new ServerEndpoint("127.0.0.1", 8184);
+
 			connection = client.Multiplayer.CreateJoinRoom(
 				"my-room-id",
 				roomType,
