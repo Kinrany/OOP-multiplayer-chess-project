@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ClientNamespace 
 {
@@ -37,6 +38,26 @@ namespace ClientNamespace
 				return networking.IsInRoom;
 			}
 		}
+		public string Opponent
+		{
+			get 
+			{
+				return opponent;
+			}
+			set
+			{
+				opponent = value;
+				ChallengePlayer(opponent);
+			}
+		}
+		public List<string> ChallengeThrow
+		{
+			get 
+			{
+				return challenges;
+			}
+		}
+		
         public void Connect(string playerName) 
         {
             networking.Connect(playerName);
@@ -45,6 +66,10 @@ namespace ClientNamespace
         {
             networking.JoinRoom(roomType);
         }
+		public void ChallengePlayer(string name)
+		{
+			networking.ChallengePlayer(name);
+		}
 
 		public bool IsPlaying = false;
 		
@@ -62,5 +87,7 @@ namespace ClientNamespace
         public event Networking.JoinedRoomDelegate OnJoinedRoom = delegate { };
 		
 		Networking networking;
+		private string opponent = null;
+		private List<string> challenges = new List<string>();
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 
 namespace ClientNamespace {
-	class GUI {
+	partial class GUI {
 		public GUI(UserData userData) {
 			//this.userData. = userData.;
 			this.userData = userData;
@@ -45,68 +45,38 @@ namespace ClientNamespace {
 			timer.Change(16, Timeout.Infinite);
 		}
 
-		private void ProcessCommand(string input) {
+		private void ProcessCommand(string input) 
+		{
 			string[] split = input.Split(' ');
 			string command = split[0];
 
-			switch (command) {
+			switch (command) 
+			{
 				case "":
 					break;
 				case "join":
-					string roomType = "Trivial v1.1";
-					if (split.Length >= 2) {
-						roomType = split[1];
-					}
-
-					try {
-						userData.JoinRoom(roomType);
-					}
-					catch (Exception e) {
-						AddString(e.Message);
-					}
-
+					join(split);
 					break;
 				case "joined":
-					AddString(userData.IsInRoom.ToString());
+					joined();
 					break;
 				case "connect":
-					string playerName = userData.Name;
-
-					try {
-						userData.Connect(playerName);
-					}
-					catch (Exception e) {
-						AddString(e.Message);
-					}
-					
+					connect();
 					break;
 				case "connected":
-					AddString(userData.IsConnected.ToString());
+					connected();
 					break;
 				case "esc":
-					Esc = true;
+					esc();
 					break;
 				case "name":
-					if(userData.IsConnected)
-					{
-						AddString("You're already connected,you fool!");
-						break;
-					}
-					else
-					{
-						if (split.Length >= 2) 
-						{
-							userData.Name = split[1];
-                            AddString(userData.Name);
-						}
-						else
-						{
-							AddString("You came up short");
-						}
-					}
+					change_name(split);
+					break;
+				case "challenge":
+					challenge(split);
 					break;
 				case "help":
-					AddString("Available commands: join, joined, connect, connected, help, esc.");
+					help();
 					break;
 				default:
 					AddString("Unknown command");
