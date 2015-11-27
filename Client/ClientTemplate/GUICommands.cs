@@ -8,7 +8,7 @@ namespace ClientNamespace
 	{
 		void join(string[] split)
 		{
-			string roomType = "Trivial v1.20";
+			string roomType = "Trivial v1.1";
 			if (split.Length >= 2) 
 			{
 				roomType = split[1];

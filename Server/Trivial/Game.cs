@@ -3,7 +3,7 @@ using System.Linq;
 using PlayerIO.GameLibrary;
 
 namespace BouncePlus {
-	[RoomType("Trivial v1.20")]
+	[RoomType("Trivial v1.1")]
 	public class Game : Game<Player> {
 
 		public override bool AllowUserJoin(Player player) {
@@ -32,25 +32,20 @@ namespace BouncePlus {
 		public override void GotMessage(Player player, Message message) {
 			switch (message.Type) {
 				case "Challenge player":
-					if (player.IsPlaying) {
-						player.Send("Denied", "You are already playing.");
-						break;
+					try {
+						if (player.IsPlaying) {
+							player.Send("Denied", "You are already playing.");
+						}
+						Player target = FindPlayerByName(message.GetString(0));
+						if (target.IsPlaying) {
+							player.Send("Denied", "Target is already playing.");
+						}
+						player.ChallengePlayer(target);
 					}
-
-					Player target = FindPlayerByName(message.GetString(0));
-
-					if (target == null) {
-						player.Send("Denied", "Target not found.");
-						break;
+					catch {
+						player.Send("Denied", "Incorrect message format/player not found.");
 					}
-					if (target.IsPlaying) {
-						player.Send("Denied", "Target is already playing.");
-						break;
-					}
-
-					player.ChallengePlayer(target);
 					break;
-
 				default:
 					player.Send("Denied", "Unknown message type.");
 					break;
@@ -58,7 +53,7 @@ namespace BouncePlus {
 		}
 
 		private Player FindPlayerByName(string name) {
-			return Players.FirstOrDefault(
+			return Players.SingleOrDefault<Player>(
 				(p) => (p.ConnectUserId == name)
 			);
 
@@ -112,8 +107,8 @@ namespace BouncePlus {
 
 			if (other.Challenged == this) {
 				GameModel.Create(this, other);
-				game.ScheduleCallback(delegate () {
-
+				game.ScheduleCallback(delegate() {
+					
 				}, 10);
 			}
 		}
