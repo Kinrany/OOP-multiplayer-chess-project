@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -6,6 +7,21 @@ namespace ClientNamespace
 {
 	partial class GUI 
 	{
+		private Dictionary<string, GUICommandDelegate> commands = new Dictionary<string, GUICommandDelegate>();
+
+		private delegate void GUICommandDelegate(string[] split);
+
+		private void LoadCommands() {
+			commands.Add("join", join);
+			commands.Add("joined", joined);
+			commands.Add("connect", connect);
+			commands.Add("connected", connected);
+			commands.Add("esc", esc);
+			commands.Add("name", change_name);
+			commands.Add("challenge", challenge);
+			commands.Add("help", help);
+		}
+
 		void join(string[] split)
 		{
 			string roomType = "Trivial v1.1";
@@ -24,12 +40,12 @@ namespace ClientNamespace
 			}
 		}
 		
-		void joined()
+		void joined(string[] split)
 		{
 			SafePrint(userData.IsInRoom);
 		}
 		
-		void connect()
+		void connect(string[] split)
 		{
 			string playerName = userData.Name;
 
@@ -43,12 +59,12 @@ namespace ClientNamespace
 			}
 		}
 		
-		void connected()
+		void connected(string[] split)
 		{
 			SafePrint(userData.IsConnected);
 		}
 		
-		void esc()
+		void esc(string[] split)
 		{
 			Esc = true;
 		}
@@ -96,9 +112,21 @@ namespace ClientNamespace
 			}
 		}
 		
-		void help()
-		{
-			SafePrint("Available commands: join, joined, connect, connected, name, challenge, help, esc.");
+		void help(string[] split) {
+			string text = "Available commands: ";
+			if (commands.Keys.Count == 0) {
+				text += "none o_o";
+			}
+			else {
+				IEnumerator<string> keys = commands.Keys.GetEnumerator();
+				keys.MoveNext();
+				text += keys.Current;
+				while (keys.MoveNext()) {
+					text += ", " + keys.Current;
+				}
+				text += ".";
+			}
+			SafePrint(text);
 		}
 	}
 }

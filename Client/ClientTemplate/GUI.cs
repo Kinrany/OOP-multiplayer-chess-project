@@ -20,6 +20,8 @@ namespace ClientNamespace {
 			userData.OnUserJoinedMessage += OnUnhandledMessage;
 			userData.OnUserLeftMessage += OnUnhandledMessage;
 
+			LoadCommands();
+
 			// Таймер для регулярного вызова Loop
 			timer = new Timer(new TimerCallback(Loop));
 		}
@@ -61,38 +63,11 @@ namespace ClientNamespace {
 		{
 			string[] split = input.Split(' ');
 			string command = split[0];
-
-			switch (command) 
-			{
-				case "":
-					break;
-				case "join":
-					join(split);
-					break;
-				case "joined":
-					joined();
-					break;
-				case "connect":
-					connect();
-					break;
-				case "connected":
-					connected();
-					break;
-				case "esc":
-					esc();
-					break;
-				case "name":
-					change_name(split);
-					break;
-				case "challenge":
-					challenge(split);
-					break;
-				case "help":
-					help();
-					break;
-				default:
-					SafePrint("Unknown command");
-					break;
+			if (commands.ContainsKey(command)) {
+				commands[command](split);
+			}
+			else {
+				SafePrint("Unknown command.");
 			}
 		}
 
