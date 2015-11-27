@@ -20,7 +20,7 @@ namespace ClientNamespace
 			}
 			catch (Exception e) 
 			{
-				AddString(e.Message);
+				AddString(e);
 			}
 		}
 		
@@ -39,7 +39,7 @@ namespace ClientNamespace
 			}
 			catch (Exception e) 
 			{
-				AddString(e.Message);
+				AddString(e);
 			}
 		}
 		
