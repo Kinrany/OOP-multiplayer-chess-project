@@ -3,7 +3,7 @@ using System.Linq;
 using PlayerIO.GameLibrary;
 
 namespace BouncePlus {
-	[RoomType("Trivial v1.21")]
+	[RoomType("Trivial v1.20")]
 	public class Game : Game<Player> {
 
 		public override bool AllowUserJoin(Player player) {
