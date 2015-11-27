@@ -9,17 +9,17 @@ namespace ClientNamespace
 		{
 			this.networking = networking;
 			
-			this.networking.OnUnknownMessage += OnUnknownMessage;
-			this.networking.OnDeniedMessage += OnDeniedMessage;
-			this.networking.OnUserJoinedMessage += OnUserJoinedMessage;
-			this.networking.OnUserLeftMessage += OnUserLeftMessage;
-			this.networking.OnChallengedMessage += OnChallengedMessage;
-			this.networking.OnChallengeRevokedMessage += OnChallengeRevokedMessage;
-			this.networking.OnGameStartedMessage += OnGameStartedMessage;
-			this.networking.OnGameEndedMessage += OnGameEndedMessage;
+			this.networking.OnUnknownMessage += delegate(string s) { OnUnknownMessage(s); };
+			this.networking.OnDeniedMessage += delegate(string s) { OnDeniedMessage(s); };
+			this.networking.OnUserJoinedMessage += delegate(string s) { OnUserJoinedMessage(s); };
+			this.networking.OnUserLeftMessage += delegate(string s) { OnUserLeftMessage(s); };
+			this.networking.OnChallengedMessage += delegate(string s) { OnChallengedMessage(s); };
+			this.networking.OnChallengeRevokedMessage += delegate(string s) { OnChallengeRevokedMessage(s); };
+			this.networking.OnGameStartedMessage += delegate() { OnGameStartedMessage(); };
+			this.networking.OnGameEndedMessage += delegate() { OnGameEndedMessage(); };
 
-            this.networking.OnConnected += OnConnected;
-            this.networking.OnJoinedRoom += OnJoinedRoom;
+            this.networking.OnConnected += delegate() { OnConnected(); };
+            this.networking.OnJoinedRoom += delegate() { OnJoinedRoom(); };
 		}
 		
 		public string Name = "Forgettable Frank";
