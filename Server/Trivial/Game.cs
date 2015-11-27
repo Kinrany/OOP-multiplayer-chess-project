@@ -111,10 +111,10 @@ namespace BouncePlus {
 			other.Send("Challenged", this.ConnectUserId);
 
 			if (other.Challenged == this) {
-				GameModel model = new GameModel(this, other);
+				GameModel.Create(this, other);
 				game.ScheduleCallback(delegate () {
-					model.Stop();
-				}, 1000);
+
+				}, 10);
 			}
 		}
 
@@ -166,15 +166,19 @@ namespace BouncePlus {
 		/// </summary>
 		/// <param name="player1">Первый игрок.</param>
 		/// <param name="player2">Второй игрок.</param>
-		public GameModel(Player player1, Player player2) {
-			this.player1 = player1;
-			this.player2 = player2;
-			player1.GameCreated(this);
-			player2.GameCreated(this);
+		public static void Create(Player player1, Player player2) {
+			GameModel model = new GameModel(player1, player2);
+			player1.GameCreated(model);
+			player2.GameCreated(model);
 		}
 
 		public delegate void GameEndDelegate();
 		public event GameEndDelegate OnGameEnded;
+
+		private GameModel(Player player1, Player player2) {
+			this.player1 = player1;
+			this.player2 = player2;
+		}
 
 		Player player1, player2;
 	}
