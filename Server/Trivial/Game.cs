@@ -56,15 +56,6 @@ namespace BouncePlus {
 			return Players.SingleOrDefault<Player>(
 				(p) => (p.ConnectUserId == name)
 			);
-
-			//// На случай, если ^ сломается
-			//
-			//foreach (var player in Players) {
-			//    if (player.ConnectUserId == name) {
-			//        return player;
-			//    }
-			//}
-			//return null;
 		}
 	}
 
