@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using PlayerIO.GameLibrary;
 
 namespace BouncePlus {
@@ -7,6 +8,8 @@ namespace BouncePlus {
 	public class Game : Game<Player> {
 
 		public override bool AllowUserJoin(Player player) {
+			Log("Player " + player.ConnectUserId + " tried to join the room.");
+
 			// Не позволяет пользователю присоединиться, если имя уже занято
 			string requestedId = player.ConnectUserId;
 			foreach (var p in Players) {
@@ -19,6 +22,8 @@ namespace BouncePlus {
 		}
 
 		public override void UserJoined(Player player) {
+			Log("Player " + player.ConnectUserId + " joined.");
+
 			player.Initialize(this);
 			player.SendPlayerList();
 
@@ -26,10 +31,14 @@ namespace BouncePlus {
 		}
 
 		public override void UserLeft(Player player) {
+			Log("Player " + player.ConnectUserId + " left.");
+
 			Broadcast("User left", player.ConnectUserId);
 		}
 
 		public override void GotMessage(Player player, Message message) {
+			Log("Player " + player.ConnectUserId + "sent a \"" + message.Type + "\" message. Contents: \n" + message.ToString());
+
 			switch (message.Type) {
 				case "Challenge player":
 					try {
@@ -42,7 +51,8 @@ namespace BouncePlus {
 						}
 						player.ChallengePlayer(target);
 					}
-					catch {
+					catch (Exception e) {
+						Log("Challenge player message processing failed.", e);
 						player.Send("Denied", "Incorrect message format/player not found.");
 					}
 					break;
@@ -56,6 +66,16 @@ namespace BouncePlus {
 			return Players.SingleOrDefault<Player>(
 				(p) => (p.ConnectUserId == name)
 			);
+		}
+
+		public void Log(string error) {
+			PlayerIO.ErrorLog.WriteError(error);
+		}
+		public void Log(string error, Exception exception) {
+			PlayerIO.ErrorLog.WriteError(error, exception);
+		}
+		public void Log(string error, string details, string stacktrace, Dictionary<string, string> extraData) {
+			PlayerIO.ErrorLog.WriteError(error, details, stacktrace, extraData);
 		}
 	}
 
@@ -74,6 +94,7 @@ namespace BouncePlus {
 		/// Посылает игроку список со всеми остальными игроками.
 		/// </summary>
 		public void SendPlayerList() {
+			game.Log("Sending player list to " + this.ConnectUserId + ".");
 			foreach (Player player in game.Players) {
 				if (player != this) {
 					this.Send("User joined", player.ConnectUserId);
@@ -86,6 +107,8 @@ namespace BouncePlus {
 		/// </summary>
 		/// <param name="other">Вызванный игрок.</param>
 		public void ChallengePlayer(Player other) {
+			game.Log("Player " + this.ConnectUserId + " challenged player " + other.ConnectUserId + ".");
+
 			if (other == this) {
 				this.Send("Denied", "You can't challenge yourself.");
 				return;
@@ -122,6 +145,8 @@ namespace BouncePlus {
 		}
 
 		public void GameCreated(GameModel model) {
+			game.Log("Player " + this.ConnectUserId + " started playing.");
+
 			this.model = model;
 			model.OnGameEnded += GameEnded;
 			this.Send("Game started");
@@ -133,6 +158,8 @@ namespace BouncePlus {
 		private GameModel model = null;
 
 		private void GameEnded() {
+			game.Log("Player " + this.ConnectUserId + " stopped playing.");
+
 			model = null;
 			this.Send("Game ended");
 		}
