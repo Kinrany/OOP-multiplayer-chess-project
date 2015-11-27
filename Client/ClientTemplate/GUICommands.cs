@@ -20,13 +20,13 @@ namespace ClientNamespace
 			}
 			catch (Exception e) 
 			{
-				AddString(e);
+				SafePrint(e);
 			}
 		}
 		
 		void joined()
 		{
-			AddString(userData.IsInRoom);
+			SafePrint(userData.IsInRoom);
 		}
 		
 		void connect()
@@ -39,13 +39,13 @@ namespace ClientNamespace
 			}
 			catch (Exception e) 
 			{
-				AddString(e);
+				SafePrint(e);
 			}
 		}
 		
 		void connected()
 		{
-			AddString(userData.IsConnected);
+			SafePrint(userData.IsConnected);
 		}
 		
 		void esc()
@@ -57,18 +57,18 @@ namespace ClientNamespace
 		{
 			if(userData.IsConnected)
 			{
-				AddString("You're already connected,you fool!");
+				SafePrint("You're already connected,you fool!");
 			}
 			else
 			{
 				if (split.Length >= 2) 
 				{
 					userData.Name = split[1];
-                    AddString(userData.Name);
+                    SafePrint(userData.Name);
 				}
 				else
 				{
-					AddString("You came up short");
+					SafePrint("You came up short");
 				}
 			}
 		}
@@ -77,11 +77,11 @@ namespace ClientNamespace
 		{
 			if(!userData.IsConnected)
 			{
-				AddString("You're not connected,you fool!");
+				SafePrint("You're not connected,you fool!");
 			}
 			else if(!userData.IsInRoom)
 			{
-				AddString("You're not in the room,you fool!");
+				SafePrint("You're not in the room,you fool!");
 			}
 			else
 			{
@@ -91,14 +91,14 @@ namespace ClientNamespace
 				}
 				else
 				{
-					AddString("Enter name next time");
+					SafePrint("Enter name next time");
 				}
 			}
 		}
 		
 		void help()
 		{
-			AddString("Available commands: join, joined, connect, connected, name, challenge, help, esc.");
+			SafePrint("Available commands: join, joined, connect, connected, name, challenge, help, esc.");
 		}
 	}
 }

@@ -31,6 +31,13 @@ namespace ClientNamespace {
 			timer.Change(0, Timeout.Infinite);
 		}
 
+		/// <summary>
+		/// Потокобезопасный вывод в консоль.
+		/// </summary>
+		public static void SafePrint(object obj) {
+			stringsToWrite.Enqueue(obj.ToString());
+		}
+
 		public bool Esc {
 			get;
 			private set;
@@ -84,46 +91,42 @@ namespace ClientNamespace {
 					help();
 					break;
 				default:
-					AddString("Unknown command");
+					SafePrint("Unknown command");
 					break;
 			}
 		}
 
 		private void OnDeniedMessage(string text) 
 		{
-			AddString("Denied: " + text);
+			SafePrint("Denied: " + text);
 		}
 		private void OnUnknownMessage(string type) 
 		{
-			AddString("Unknown message of type \"" + type + "\"");
+			SafePrint("Unknown message of type \"" + type + "\"");
 		}
 		private void OnConnect() 
 		{
-			AddString("Connected");
+			SafePrint("Connected");
 		}
 		private void OnJoined() 
 		{
-			AddString("Joined room");
+			SafePrint("Joined room");
 		}
 		private void OnChallengedMessage(string nemesis)
 		{
-			AddString("Challenged by " + nemesis);
+			SafePrint("Challenged by " + nemesis);
 		}
 		private void OnUnhandledMessage()
 		{
-			AddString("Unhandled message");
+			SafePrint("Unhandled message");
 		}
 		private void OnUnhandledMessage(string str)
 		{
-			AddString("Unhandled message: " + str);
+			SafePrint("Unhandled message: " + str);
 		}
 
-		private void AddString(object obj) 
-		{
-			stringsToWrite.Enqueue(obj.ToString());
-		}
+		private static Queue<string> stringsToWrite = new Queue<string>();
 
-		private Queue<string> stringsToWrite = new Queue<string>();
 		private UserData userData;
 		private Timer timer;
 	}
