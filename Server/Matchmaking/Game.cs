@@ -5,7 +5,11 @@ using PlayerIO.GameLibrary;
 
 namespace Matchmaking {
 	[RoomType("Matchmaking v1.2")]
-	public class Game : Game<Player> {
+	public partial class Game : Game<Player> {
+
+		public Game() : base() {
+			LoadIncomingMessages();
+		}
 
 		public override bool AllowUserJoin(Player player) {
 			Log("Player " + player.ConnectUserId + " tried to join the room.");
@@ -39,26 +43,11 @@ namespace Matchmaking {
 		public override void GotMessage(Player player, Message message) {
 			Log("Player " + player.ConnectUserId + "sent a \"" + message.Type + "\" message. Contents: \n" + message.ToString());
 
-			switch (message.Type) {
-				case "Challenge player":
-					try {
-						if (player.IsPlaying) {
-							player.Send("Denied", "You are already playing.");
-						}
-						Player target = FindPlayerByName(message.GetString(0));
-						if (target.IsPlaying) {
-							player.Send("Denied", "Target is already playing.");
-						}
-						player.ChallengePlayer(target);
-					}
-					catch (Exception e) {
-						Log("Challenge player message processing failed.", e);
-						player.Send("Denied", "Incorrect message format/player not found.");
-					}
-					break;
-				default:
-					player.Send("Denied", "Unknown message type.");
-					break;
+			if (incomingMessages.ContainsKey(message.Type)) {
+				incomingMessages[message.Type](player, message);
+			}
+			else {
+				player.Send("Denied", "Unknown message type.");
 			}
 		}
 
