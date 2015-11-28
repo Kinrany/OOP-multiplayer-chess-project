@@ -9,7 +9,7 @@ namespace ClientNamespace
 	{
 		private Dictionary<string, GUICommandDelegate> commands = new Dictionary<string, GUICommandDelegate>();
 
-		private delegate void GUICommandDelegate(string[] split);
+		private delegate void GUICommandDelegate(string args);
 
 		// Загружает команды в словарь commands
 		private void LoadCommands() {
@@ -24,12 +24,12 @@ namespace ClientNamespace
 		}
 
 		// Соединяет с комнатой
-		void join(string[] split)
+		void join(string args)
 		{
 			string roomType = "Trivial v1.1";
-			if (split.Length >= 2) 
+			if (args.Length > 0) 
 			{
-				roomType = split[1];
+				roomType = args;
 			}
 
 			try 
@@ -43,13 +43,13 @@ namespace ClientNamespace
 		}
 		
 		// Показывает, присоединился ли клиент к комнате
-		void joined(string[] split)
+		void joined(string args)
 		{
 			SafePrint(userData.IsInRoom);
 		}
 		
 		// Соединяет клиент с YGN
-		void connect(string[] split)
+		void connect(string args)
 		{
 			string playerName = userData.Name;
 
@@ -64,19 +64,19 @@ namespace ClientNamespace
 		}
 		
 		// Показывает, присоединился ли клиент к основному серверу YGN
-		void connected(string[] split)
+		void connected(string args)
 		{
 			SafePrint(userData.IsConnected);
 		}
 		
 		// Закрывает игру
-		void esc(string[] split)
+		void esc(string args)
 		{
 			Esc = true;
 		}
 		
 		// Меняет имя игрока
-		void change_name(string[] split)
+		void change_name(string args)
 		{
 			if(userData.IsConnected)
 			{
@@ -84,9 +84,9 @@ namespace ClientNamespace
 			}
 			else
 			{
-				if (split.Length >= 2) 
+				if (args.Length > 0) 
 				{
-					userData.Name = split[1];
+					userData.Name = args;
                     SafePrint(userData.Name);
 				}
 				else
@@ -97,7 +97,7 @@ namespace ClientNamespace
 		}
 		
 		// Предлагает сыграть другому игроку
-		void challenge(string[] split)
+		void challenge(string args)
 		{
 			if(!userData.IsConnected)
 			{
@@ -109,9 +109,9 @@ namespace ClientNamespace
 			}
 			else
 			{
-				if (split.Length >= 2) 
+				if (args.Length > 0) 
 				{
-					userData.Opponent = split[1];
+					userData.Opponent = args;
 				}
 				else
 				{
@@ -121,7 +121,7 @@ namespace ClientNamespace
 		}
 		
 		// Выводит список доступных команд
-		void help(string[] split) {
+		void help(string args) {
 			string text = "Available commands: ";
 			if (commands.Keys.Count == 0) {
 				text += "none o_o";

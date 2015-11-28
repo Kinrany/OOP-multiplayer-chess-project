@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -61,10 +62,12 @@ namespace ClientNamespace {
 
 		private void ProcessCommand(string input) 
 		{
-			string[] split = input.Split(' ');
-			string command = split[0];
+			Match m = Regex.Match(input, @"^(\S+)\s*(\S.*)?$");
+			string command = m.Groups[1].ToString();
+			string args = m.Groups[2].ToString();
+
 			if (commands.ContainsKey(command)) {
-				commands[command](split);
+				commands[command](args);
 			}
 			else {
 				SafePrint("Unknown command.");
