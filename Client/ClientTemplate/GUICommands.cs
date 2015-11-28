@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
@@ -11,6 +11,7 @@ namespace ClientNamespace
 
 		private delegate void GUICommandDelegate(string[] split);
 
+		// Загружает команды в словарь commands
 		private void LoadCommands() {
 			commands.Add("join", join);
 			commands.Add("joined", joined);
@@ -22,6 +23,7 @@ namespace ClientNamespace
 			commands.Add("help", help);
 		}
 
+		// Соединяет с комнатой
 		void join(string[] split)
 		{
 			string roomType = "Trivial v1.1";
@@ -40,11 +42,13 @@ namespace ClientNamespace
 			}
 		}
 		
+		// Показывает, присоединился ли клиент к комнате
 		void joined(string[] split)
 		{
 			SafePrint(userData.IsInRoom);
 		}
 		
+		// Соединяет клиент с YGN
 		void connect(string[] split)
 		{
 			string playerName = userData.Name;
@@ -59,16 +63,19 @@ namespace ClientNamespace
 			}
 		}
 		
+		// Показывает, присоединился ли клиент к основному серверу YGN
 		void connected(string[] split)
 		{
 			SafePrint(userData.IsConnected);
 		}
 		
+		// Закрывает игру
 		void esc(string[] split)
 		{
 			Esc = true;
 		}
 		
+		// Меняет имя игрока
 		void change_name(string[] split)
 		{
 			if(userData.IsConnected)
@@ -89,6 +96,7 @@ namespace ClientNamespace
 			}
 		}
 		
+		// Предлагает сыграть другому игроку
 		void challenge(string[] split)
 		{
 			if(!userData.IsConnected)
@@ -112,6 +120,7 @@ namespace ClientNamespace
 			}
 		}
 		
+		// Выводит список доступных команд
 		void help(string[] split) {
 			string text = "Available commands: ";
 			if (commands.Keys.Count == 0) {
