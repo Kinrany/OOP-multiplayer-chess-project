@@ -81,6 +81,11 @@ namespace Matchmaking {
 			this.Send("Game started");
 		}
 
+		public GameModel GameModel {
+			get {
+				return model;
+			}
+		}
 
 		private Game game = null;
 		private Player challenged = null;

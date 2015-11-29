@@ -14,6 +14,9 @@ namespace Matchmaking {
 		private void LoadIncomingMessages() {
 			incomingMessages["Challenge player"] = challenge_player;
 			incomingMessages["Say"] = say;
+			incomingMessages["Create figure"] = create_figure;
+			incomingMessages["Move figure"] = move_figure;
+			incomingMessages["Delete figure"] = delete_figure;
 		}
 
 		private void challenge_player(Player player, Message message) {
@@ -32,6 +35,7 @@ namespace Matchmaking {
 				player.Send("Denied", "Incorrect message format.");
 			}
 		}
+
 		private void say(Player player, Message message) {
 			try { 
 				Broadcast("Say", message.GetString(0));
@@ -41,5 +45,43 @@ namespace Matchmaking {
 				player.Send("Denied", "Incorrect message format.");
 			}
 		}
-    }
+
+		private void create_figure(Player player, Message message) {
+			try {
+				string position = message.GetString(0);
+				string figure = message.GetString(1);
+				player.GameModel.CreateFigure(position, figure);
+				Broadcast("Create figure", player.ConnectUserId, position, figure);
+			}
+			catch (Exception e) {
+				Log("Create figure message processing failed.", e);
+				player.Send("Denied", "Incorrect message format.");
+			}
+		}
+
+		private void move_figure(Player player, Message message) {
+			try {
+				string pos1 = message.GetString(0);
+				string pos2 = message.GetString(1);
+				player.GameModel.MoveFigure(pos1, pos2);
+				Broadcast("Move figure", player.ConnectUserId, pos1, pos2);
+			}
+			catch (Exception e) {
+				Log("Move figure message processing failed.", e);
+				player.Send("Denied", "Incorrect message format.");
+			}
+		}
+
+		private void delete_figure(Player player, Message message) {
+			try {
+				string position = message.GetString(0);
+				player.GameModel.DeleteFigure(position);
+				Broadcast("Delete figure", player.ConnectUserId, position);
+			}
+			catch (Exception e) {
+				Log("Delete figure message processing failed.", e);
+				player.Send("Denied", "Incorrect message format.");
+			}
+		}
+	}
 }
