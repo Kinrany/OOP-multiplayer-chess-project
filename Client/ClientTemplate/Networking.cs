@@ -2,7 +2,7 @@
 using PlayerIOClient;
 
 namespace ClientNamespace {
-	class Networking {
+	partial class Networking {
 		public Networking() {
 			client = null;
 			connection = null;
@@ -122,43 +122,11 @@ namespace ClientNamespace {
 		private Connection connection;
 
 		private void OnMessage(object sender, Message m) {
-			switch (m.Type) {
-				case "Denied":
-					OnDeniedMessage((string)m[0]);
-					break;
-				case "User joined":
-					OnUserJoinedMessage((string)m[0]);
-					break;
-				case "User left":
-					OnUserLeftMessage((string)m[0]);
-					break;
-				case "Challenged":
-					OnChallengedMessage((string)m[0]);
-					break;
-				case "Challenge revoked":
-					OnChallengeRevokedMessage((string)m[0]);
-					break;
-				case "Game started":
-					OnGameStartedMessage();
-					break;
-				case "Game ended":
-					OnGameEndedMessage();
-					break;
-				case "Say":
-					OnSayMessage((string)m[0], (string)m[1]);
-					break;
-				case "Create figure":
-					OnCreateFigureMessage((string)m[0], (string)m[1], (string)m[2]);
-					break;
-				case "Move figure":
-					OnMoveFigureMessage((string)m[0], (string)m[1], (string)m[2]);
-					break;
-				case "Delete figure":
-					OnDeleteFigureMessage((string)m[0], (string)m[1]);
-					break;
-				default:
-					OnUnknownMessage(m.Type);
-					break;
+			if (messages.ContainsKey(m.Type)) {
+				messages[m.Type](m);
+			}
+			else {
+				OnUnknownMessage(m.Type);
 			}
 		}
 	}
