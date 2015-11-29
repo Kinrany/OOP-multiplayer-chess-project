@@ -22,11 +22,31 @@ namespace Matchmaking {
 		public GameModel(Player player1, Player player2) {
 			this.player1 = player1;
 			this.player2 = player2;
+
+			figures = new ChessFigures();
+			board = figures.LoadBoard(ChessBoard.DefaultBoard);
 		}
 
 		public delegate void GameEndDelegate();
 		public event GameEndDelegate OnGameEnded;
 
-		Player player1, player2;
+		public void CreateFigure(string position, string figure) {
+			board.CreateFigure(
+				new ChessFigurePosition(position), 
+				figures.LoadFigure(figure));
+		}
+		public void MoveFigure(string pos1, string pos2) {
+			board.MoveFigure(
+				new ChessFigurePosition(pos1),
+				new ChessFigurePosition(pos2));
+		}
+		public void DeleteFigure(string position) {
+			board.DeleteFigure(new ChessFigurePosition(position));
+		}
+
+		private Player player1, player2;
+
+		private ChessBoard board;
+		private ChessFigures figures;
 	}
 }
