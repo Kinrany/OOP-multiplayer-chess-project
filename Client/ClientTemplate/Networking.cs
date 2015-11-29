@@ -60,13 +60,25 @@ namespace ClientNamespace {
 			OnJoinedRoom();
 		}
 
+
 		// Методы для отправки сообщений
 		public void ChallengePlayer(string name) {
 			connection.Send("Challenge player", name);
 		}
+		public void Say(string text) {
+			connection.Send("Say", text);
+		}
+		public void CreateFigure(string position, string figure) {
+			connection.Send("Create figure", position, figure);
+		}
+		public void MoveFigure(string position1, string position2) {
+			connection.Send("Move figure", position1, position2);
+		}
+		public void DeleteFigure(string position) {
+			connection.Send("Delete figure", position);
+		}
 
 		// События для обработки входящих сообщений
-		// "= delegate { }" спасает от исключения, если нет подписчиков
 		public event UnknownMessageDelegate OnUnknownMessage = delegate { };
 		public event DeniedMessageDelegate OnDeniedMessage = delegate { };
 		public event UserJoinedMessageDelegate OnUserJoinedMessage = delegate { };
@@ -75,6 +87,10 @@ namespace ClientNamespace {
 		public event ChallengeRevokedMessageDelegate OnChallengeRevokedMessage = delegate { };
 		public event GameStartedMessageDelegate OnGameStartedMessage = delegate { };
 		public event GameEndedMessageDelegate OnGameEndedMessage = delegate { };
+		public event CreateFigureMessageDelegate OnCreateFigureMessage = delegate { };
+		public event MoveFigureMessageDelegate OnMoveFigureMessage = delegate { };
+		public event DeleteFigureMessageDelegate OnDeleteFigureMessage = delegate { };
+		public event SayMessageDelegate OnSayMessage = delegate { };
 		// Делегаты для обработки входящих сообщений
 		public delegate void UnknownMessageDelegate(string messageType);
 		public delegate void DeniedMessageDelegate(string text);
@@ -84,6 +100,11 @@ namespace ClientNamespace {
 		public delegate void ChallengeRevokedMessageDelegate(string username);
 		public delegate void GameStartedMessageDelegate();
 		public delegate void GameEndedMessageDelegate();
+		public delegate void SayMessageDelegate(string playername, string text);
+		public delegate void CreateFigureMessageDelegate(string playername, string position, string figure);
+		public delegate void MoveFigureMessageDelegate(string playername, string position1, string position2);
+		public delegate void DeleteFigureMessageDelegate(string playername, string position);
+
 
 		/// <summary>
 		/// Вызывается при успешном подключении к серверу.
@@ -122,6 +143,18 @@ namespace ClientNamespace {
 					break;
 				case "Game ended":
 					OnGameEndedMessage();
+					break;
+				case "Say":
+					OnSayMessage((string)m[0], (string)m[1]);
+					break;
+				case "Create figure":
+					OnCreateFigureMessage((string)m[0], (string)m[1], (string)m[2]);
+					break;
+				case "Move figure":
+					OnMoveFigureMessage((string)m[0], (string)m[1], (string)m[2]);
+					break;
+				case "Delete figure":
+					OnDeleteFigureMessage((string)m[0], (string)m[1]);
 					break;
 				default:
 					OnUnknownMessage(m.Type);
