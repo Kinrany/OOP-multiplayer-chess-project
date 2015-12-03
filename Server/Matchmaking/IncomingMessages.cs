@@ -38,7 +38,7 @@ namespace Matchmaking {
 
 		private void say(Player player, Message message) {
 			try { 
-				Broadcast("Say", message.GetString(0));
+				Broadcast("Say", player.ConnectUserId, message.GetString(0));
 			}
 			catch (Exception e){
 				Log("Say message processing failed.", e);
