@@ -17,6 +17,7 @@ namespace ClientNamespace
 			this.networking.OnChallengeRevokedMessage += delegate(string s) { OnChallengeRevokedMessage(s); };
 			this.networking.OnGameStartedMessage += delegate() { OnGameStartedMessage(); };
 			this.networking.OnGameEndedMessage += delegate() { OnGameEndedMessage(); };
+			this.networking.OnSayMessage += delegate(string s,string m) { OnSayMessage(s,m); };
 
             this.networking.OnConnected += delegate() { OnConnected(); };
             this.networking.OnJoinedRoom += delegate() { OnJoinedRoom(); };
@@ -70,6 +71,10 @@ namespace ClientNamespace
 		{
 			networking.ChallengePlayer(name);
 		}
+		public void SayMessage(string message)
+		{
+			networking.Say(message);
+		}
 
 		public bool IsPlaying = false;
 		
@@ -82,6 +87,7 @@ namespace ClientNamespace
         public event Networking.ChallengeRevokedMessageDelegate OnChallengeRevokedMessage = delegate { };
         public event Networking.GameStartedMessageDelegate OnGameStartedMessage = delegate { };
         public event Networking.GameEndedMessageDelegate OnGameEndedMessage = delegate { };
+		public event Networking.SayMessageDelegate OnSayMessage = delegate { };
 
         public event Networking.ConnectedDelegate OnConnected = delegate { };
         public event Networking.JoinedRoomDelegate OnJoinedRoom = delegate { };

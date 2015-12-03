@@ -13,12 +13,14 @@ namespace ClientNamespace
 
 		// Загружает команды в словарь commands
 		private void LoadCommands() {
+			commands.Add("", delegate(string args) { });
 			commands.Add("join", join);
 			commands.Add("joined", joined);
 			commands.Add("connect", connect);
 			commands.Add("connected", connected);
 			commands.Add("esc", esc);
 			commands.Add("name", change_name);
+			commands.Add("say", say);
 			commands.Add("challenge", challenge);
 			commands.Add("help", help);
 		}
@@ -26,7 +28,7 @@ namespace ClientNamespace
 		// Соединяет с комнатой
 		void join(string args)
 		{
-			string roomType = "Trivial v1.1";
+			string roomType = "Matchmaking v1.2";
 			if (args.Length > 0) 
 			{
 				roomType = args;
@@ -93,6 +95,20 @@ namespace ClientNamespace
 				{
 					SafePrint("You came up short");
 				}
+			}
+		}
+		
+		// Команда для посылки сообщений
+		void say(string args)
+		{
+			if(!userData.IsInRoom)
+			{
+				SafePrint("Nobody hears you");
+			}
+			if (args.Length > 0) 
+			{
+				SafePrint("You say: " + args);
+				userData.SayMessage(args);
 			}
 		}
 		
