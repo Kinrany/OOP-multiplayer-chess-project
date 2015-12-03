@@ -107,7 +107,6 @@ namespace ClientNamespace
 			}
 			if (args.Length > 0) 
 			{
-				SafePrint("You say: " + args);
 				userData.SayMessage(args);
 			}
 		}
