@@ -13,6 +13,7 @@ namespace ClientNamespace {
 			userData.OnConnected += OnConnect;
 			userData.OnDeniedMessage += OnDeniedMessage;
 			userData.OnJoinedRoom += OnJoined;
+			userData.OnSayMessage += OnSayMessage;
 			userData.OnUnknownMessage += OnUnknownMessage;
 
 			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
@@ -93,6 +94,10 @@ namespace ClientNamespace {
 		private void OnChallengedMessage(string nemesis)
 		{
 			SafePrint("Challenged by " + nemesis);
+		}
+		private void OnSayMessage(string sender, string message)
+		{
+			SafePrint(sender + " says: \"" + message + "\"");
 		}
 		private void OnUnhandledMessage()
 		{

@@ -11,6 +11,7 @@ namespace ClientNamespace {
 		private delegate void MessageDelegate(Message m);
 
 		private void LoadMessages() {
+            messages = new Dictionary<string, MessageDelegate>();
 			messages["Denied"]            = delegate(Message m) { OnDeniedMessage          ((string)m[0]                            ); };
 			messages["User joined"]       = delegate(Message m) { OnUserJoinedMessage      ((string)m[0]                            ); };
 			messages["User left"]         = delegate(Message m) { OnUserLeftMessage        ((string)m[0]                            ); };
