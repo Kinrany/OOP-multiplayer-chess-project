@@ -14,18 +14,20 @@ namespace ClientNamespace {
 			userData.OnDeniedMessage += OnDeniedMessage;
 			userData.OnJoinedRoom += OnJoined;
 			userData.OnSayMessage += OnSayMessage;
+			userData.OnUserJoinedMessage += OnUserJoinedMessage;
+			userData.OnUserLeftMessage += OnUserLeftMessage;
 			userData.OnUnknownMessage += OnUnknownMessage;
 
 			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
 			userData.OnGameEndedMessage += OnUnhandledMessage;
 			userData.OnGameStartedMessage += OnUnhandledMessage;
-			userData.OnUserJoinedMessage += OnUnhandledMessage;
-			userData.OnUserLeftMessage += OnUnhandledMessage;
+			//userData.OnUserJoinedMessage += OnUnhandledMessage;
+			//userData.OnUserLeftMessage += OnUnhandledMessage;
 
 			LoadCommands();
 
 			// Таймер для регулярного вызова Loop
-			timer = new Timer(new TimerCallback(Loop));
+            timer = new Timer(new TimerCallback(Loop));
 		}
 
 		/// <summary>
@@ -97,7 +99,17 @@ namespace ClientNamespace {
 		}
 		private void OnSayMessage(string sender, string message)
 		{
+			if(userData.Name != sender)
 			SafePrint(sender + " says: \"" + message + "\"");
+		}
+		private void OnUserJoinedMessage(string player)
+		{
+			if(userData.Name != player)
+				SafePrint(player + " has joined the room");
+		}
+		private void OnUserLeftMessage(string player)
+		{
+			SafePrint(player + " has left the room");
 		}
 		private void OnUnhandledMessage()
 		{
@@ -111,6 +123,6 @@ namespace ClientNamespace {
 		private static Queue<string> stringsToWrite = new Queue<string>();
 
 		private UserData userData;
-		private Timer timer;
+        private Timer timer;
 	}
 }
