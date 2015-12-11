@@ -3,9 +3,12 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ClientNamespace {
-	partial class GUI {
-		public GUI(UserData userData) {
+namespace ClientNamespace
+{
+	partial class GUI
+	{
+		public GUI(UserData userData)
+		{
 			this.userData = userData;
 			Esc = false;
 
@@ -13,13 +16,14 @@ namespace ClientNamespace {
 			userData.OnConnected += OnConnect;
 			userData.OnDeniedMessage += OnDeniedMessage;
 			userData.OnJoinedRoom += OnJoined;
+			userData.OnSayMessage += OnSayMessage;
+			userData.OnUserJoinedMessage += OnUserJoinedMessage;
+			userData.OnUserLeftMessage += OnUserLeftMessage;
 			userData.OnUnknownMessage += OnUnknownMessage;
 
 			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
 			userData.OnGameEndedMessage += OnUnhandledMessage;
 			userData.OnGameStartedMessage += OnUnhandledMessage;
-			userData.OnUserJoinedMessage += OnUnhandledMessage;
-			userData.OnUserLeftMessage += OnUnhandledMessage;
 
 			LoadCommands();
 
@@ -30,7 +34,8 @@ namespace ClientNamespace {
 		/// <summary>
 		/// Запускает основной цикл.
 		/// </summary>
-		public void StartLoop() {
+		public void StartLoop()
+		{
 			timer.Change(0, Timeout.Infinite);
 		}
 
@@ -46,30 +51,36 @@ namespace ClientNamespace {
 			private set;
 		}
 
-		private void Loop(object o) {
+		private void Loop(object o)
+		{
+			//if(!showtime.Enabled)
+			//	 Esc = true;
 			// Выводит содержимое stringsToWrite в консоль
 			while (stringsToWrite.Count > 0) {
 				Console.WriteLine(stringsToWrite.Dequeue());
 			}
 
 			// Считывает и выполняет новую команду
-			Console.Write(">>");
-			ProcessCommand(Console.ReadLine());
+
+			//Console.Write(">>");
+			//ProcessCommand(Console.ReadLine());
 
 			// Запускает отсчёт до следующего вызова Loop
 			timer.Change(16, Timeout.Infinite);
 		}
 
-		private void ProcessCommand(string input) 
+		public void ProcessCommand(string input) 
 		{
 			Match m = Regex.Match(input, @"^(\S+)\s*(\S.*)?$");
 			string command = m.Groups[1].ToString();
 			string args = m.Groups[2].ToString();
 
-			if (commands.ContainsKey(command)) {
+			if (commands.ContainsKey(command))
+			{
 				commands[command](args);
 			}
-			else {
+			else
+			{
 				SafePrint("Unknown command.");
 			}
 		}
@@ -94,6 +105,21 @@ namespace ClientNamespace {
 		{
 			SafePrint("Challenged by " + nemesis);
 		}
+		private void OnSayMessage(string sender, string message)
+		{
+			if(userData.Name != sender)
+			SafePrint(sender + " says: \"" + message + "\"");
+		}
+		private void OnUserJoinedMessage(string player)
+		{
+			if(userData.Name != player)
+				SafePrint(player + " has joined the room");
+		}
+		private void OnUserLeftMessage(string player)
+		{
+			SafePrint(player + " has left the room");
+		}
+
 		private void OnUnhandledMessage()
 		{
 			SafePrint("Unhandled message");
