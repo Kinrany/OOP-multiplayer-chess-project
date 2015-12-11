@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace ClientNamespace 
 {
-    partial class GUI 
+	partial class GUI 
 	{
 		private Dictionary<string, GUICommandDelegate> commands = new Dictionary<string, GUICommandDelegate>();
 
@@ -89,7 +89,7 @@ namespace ClientNamespace
 				if (args.Length > 0) 
 				{
 					userData.Name = args;
-                    SafePrint(userData.Name);
+					SafePrint(userData.Name);
 				}
 				else
 				{
