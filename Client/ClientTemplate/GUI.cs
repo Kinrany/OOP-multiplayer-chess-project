@@ -17,15 +17,18 @@ namespace ClientNamespace
 			userData.OnDeniedMessage += OnDeniedMessage;
 			userData.OnJoinedRoom += OnJoined;
 			userData.OnSayMessage += OnSayMessage;
+/*<<<<<<< HEAD
 			userData.OnUserJoinedMessage += OnUserJoinedMessage;
 			userData.OnUserLeftMessage += OnUserLeftMessage;
+=======
+>>>>>>> 1e801e31b27deadedb4af26e2f4ea0cb3b09957b*/
 			userData.OnUnknownMessage += OnUnknownMessage;
 
 			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
 			userData.OnGameEndedMessage += OnUnhandledMessage;
 			userData.OnGameStartedMessage += OnUnhandledMessage;
-			//userData.OnUserJoinedMessage += OnUnhandledMessage;
-			//userData.OnUserLeftMessage += OnUnhandledMessage;
+			userData.OnUserJoinedMessage += OnUnhandledMessage;
+			userData.OnUserLeftMessage += OnUnhandledMessage;
 
 			LoadCommands();
 
@@ -109,9 +112,10 @@ namespace ClientNamespace
 		}
 		private void OnSayMessage(string sender, string message)
 		{
-			if(userData.Name != sender)
+//<<<<<<< HEAD
+	//		if(userData.Name != sender)
 			SafePrint(sender + " says: \"" + message + "\"");
-		}
+		/*}
 		private void OnUserJoinedMessage(string player)
 		{
 			if(userData.Name != player)
@@ -121,6 +125,10 @@ namespace ClientNamespace
 		{
 			SafePrint(player + " has left the room");
 		}
+//=======
+			SafePrint(sender + " says: \"" + message + "\"");
+		}*/
+//>>>>>>> 1e801e31b27deadedb4af26e2f4ea0cb3b09957b
 		private void OnUnhandledMessage()
 		{
 			SafePrint("Unhandled message");
