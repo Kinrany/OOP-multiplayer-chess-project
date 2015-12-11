@@ -4,9 +4,9 @@ using PlayerIOClient;
 namespace ClientNamespace
 {
 	partial class Networking
-    {
+	{
 		public Networking()
-        {
+		{
 			client = null;
 			connection = null;
 
@@ -26,7 +26,7 @@ namespace ClientNamespace
 		/// </summary>
 		/// <param name="playerName">Имя игрока.</param>
 		public void Connect(string playerName)
-        {
+		{
 			client = PlayerIO.Connect(
 				"test-game-1-sebwxyhi2k6yfeymgnxfa",
 				"public",

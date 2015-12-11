@@ -6,9 +6,9 @@ using System.Threading;
 namespace ClientNamespace
 {
 	partial class GUI
-    {
+	{
 		public GUI(UserData userData)
-        {
+		{
 			this.userData = userData;
 			Esc = false;
 
@@ -24,21 +24,19 @@ namespace ClientNamespace
 			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
 			userData.OnGameEndedMessage += OnUnhandledMessage;
 			userData.OnGameStartedMessage += OnUnhandledMessage;
-			//userData.OnUserJoinedMessage += OnUnhandledMessage;
-			//userData.OnUserLeftMessage += OnUnhandledMessage;
 
 			LoadCommands();
 
 			// Таймер для регулярного вызова Loop
-            timer = new Timer(new TimerCallback(Loop));
-        }
+			timer = new Timer(new TimerCallback(Loop));
+		}
 
-        /// <summary>
-        /// Запускает основной цикл.
-        /// </summary>
-        public void StartLoop()
-        {
-            timer.Change(0, Timeout.Infinite);
+		/// <summary>
+		/// Запускает основной цикл.
+		/// </summary>
+		public void StartLoop()
+		{
+			timer.Change(0, Timeout.Infinite);
 		}
 
 		/// <summary>
@@ -54,11 +52,11 @@ namespace ClientNamespace
 		}
 
 		private void Loop(object o)
-        {
-            //if(!showtime.Enabled)
-            //     Esc = true;
-            // Выводит содержимое stringsToWrite в консоль
-            while (stringsToWrite.Count > 0) {
+		{
+			//if(!showtime.Enabled)
+			//	 Esc = true;
+			// Выводит содержимое stringsToWrite в консоль
+			while (stringsToWrite.Count > 0) {
 				Console.WriteLine(stringsToWrite.Dequeue());
 			}
 
@@ -71,18 +69,18 @@ namespace ClientNamespace
 			timer.Change(16, Timeout.Infinite);
 		}
 
-        public void ProcessCommand(string input) 
+		public void ProcessCommand(string input) 
 		{
 			Match m = Regex.Match(input, @"^(\S+)\s*(\S.*)?$");
 			string command = m.Groups[1].ToString();
 			string args = m.Groups[2].ToString();
 
 			if (commands.ContainsKey(command))
-            {
+			{
 				commands[command](args);
 			}
 			else
-            {
+			{
 				SafePrint("Unknown command.");
 			}
 		}
@@ -134,6 +132,6 @@ namespace ClientNamespace
 		private static Queue<string> stringsToWrite = new Queue<string>();
 
 		private UserData userData;
-        private Timer timer;
-    }
+		private Timer timer;
+	}
 }
