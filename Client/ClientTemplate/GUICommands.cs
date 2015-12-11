@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace ClientNamespace 
 {
-	partial class GUI 
+    partial class GUI 
 	{
 		private Dictionary<string, GUICommandDelegate> commands = new Dictionary<string, GUICommandDelegate>();
 

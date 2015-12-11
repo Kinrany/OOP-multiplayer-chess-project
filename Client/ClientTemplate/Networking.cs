@@ -1,9 +1,12 @@
 ﻿using System;
 using PlayerIOClient;
 
-namespace ClientNamespace {
-	partial class Networking {
-		public Networking() {
+namespace ClientNamespace
+{
+	partial class Networking
+    {
+		public Networking()
+        {
 			client = null;
 			connection = null;
 
@@ -22,7 +25,8 @@ namespace ClientNamespace {
 		/// Заходит на сервер под заданным именем.
 		/// </summary>
 		/// <param name="playerName">Имя игрока.</param>
-		public void Connect(string playerName) {
+		public void Connect(string playerName)
+        {
 			client = PlayerIO.Connect(
 				"test-game-1-sebwxyhi2k6yfeymgnxfa",
 				"public",

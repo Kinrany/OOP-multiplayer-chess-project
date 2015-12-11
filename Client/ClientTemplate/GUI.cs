@@ -3,9 +3,12 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ClientNamespace {
-	partial class GUI {
-		public GUI(UserData userData) {
+namespace ClientNamespace
+{
+	partial class GUI
+    {
+		public GUI(UserData userData)
+        {
 			this.userData = userData;
 			Esc = false;
 
@@ -28,13 +31,14 @@ namespace ClientNamespace {
 
 			// Таймер для регулярного вызова Loop
             timer = new Timer(new TimerCallback(Loop));
-		}
+        }
 
-		/// <summary>
-		/// Запускает основной цикл.
-		/// </summary>
-		public void StartLoop() {
-			timer.Change(0, Timeout.Infinite);
+        /// <summary>
+        /// Запускает основной цикл.
+        /// </summary>
+        public void StartLoop()
+        {
+            timer.Change(0, Timeout.Infinite);
 		}
 
 		/// <summary>
@@ -49,30 +53,36 @@ namespace ClientNamespace {
 			private set;
 		}
 
-		private void Loop(object o) {
-			// Выводит содержимое stringsToWrite в консоль
-			while (stringsToWrite.Count > 0) {
+		private void Loop(object o)
+        {
+            //if(!showtime.Enabled)
+            //     Esc = true;
+            // Выводит содержимое stringsToWrite в консоль
+            while (stringsToWrite.Count > 0) {
 				Console.WriteLine(stringsToWrite.Dequeue());
 			}
 
 			// Считывает и выполняет новую команду
-			Console.Write(">>");
-			ProcessCommand(Console.ReadLine());
+
+			//Console.Write(">>");
+			//ProcessCommand(Console.ReadLine());
 
 			// Запускает отсчёт до следующего вызова Loop
 			timer.Change(16, Timeout.Infinite);
 		}
 
-		private void ProcessCommand(string input) 
+        public void ProcessCommand(string input) 
 		{
 			Match m = Regex.Match(input, @"^(\S+)\s*(\S.*)?$");
 			string command = m.Groups[1].ToString();
 			string args = m.Groups[2].ToString();
 
-			if (commands.ContainsKey(command)) {
+			if (commands.ContainsKey(command))
+            {
 				commands[command](args);
 			}
-			else {
+			else
+            {
 				SafePrint("Unknown command.");
 			}
 		}
@@ -124,5 +134,5 @@ namespace ClientNamespace {
 
 		private UserData userData;
         private Timer timer;
-	}
+    }
 }
