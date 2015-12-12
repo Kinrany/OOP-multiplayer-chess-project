@@ -27,7 +27,7 @@ namespace ClientNamespace {
 			LoadCommands();
 
 			// Таймер для регулярного вызова Loop
-            timer = new Timer(new TimerCallback(Loop));
+			timer = new Timer(new TimerCallback(Loop));
 		}
 
 		/// <summary>
@@ -123,6 +123,6 @@ namespace ClientNamespace {
 		private static Queue<string> stringsToWrite = new Queue<string>();
 
 		private UserData userData;
-        private Timer timer;
+		private Timer timer;
 	}
 }

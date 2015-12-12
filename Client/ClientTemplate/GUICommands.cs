@@ -89,7 +89,7 @@ namespace ClientNamespace
 				if (args.Length > 0) 
 				{
 					userData.Name = args;
-                    SafePrint(userData.Name);
+					SafePrint(userData.Name);
 				}
 				else
 				{
