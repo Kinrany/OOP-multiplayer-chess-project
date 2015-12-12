@@ -101,13 +101,19 @@ namespace ClientNamespace {
 		}
 		private void OnSayMessage(string sender, string message)
 		{
-			if(userData.Name != sender) {
+			if (userData.Name == sender) {
+				SafePrint("You say: \"" + message + "\"");
+			}
+			else {
 				SafePrint(sender + " says: \"" + message + "\"");
 			}
 		}
 		private void OnUserJoinedMessage(string player)
 		{
-			if(userData.Name != player) {
+			if (userData.Name == player) {
+				SafePrint("You joined the room");
+			}
+			else { 
 				SafePrint(player + " has joined the room");
 			}
 		}
