@@ -21,8 +21,6 @@ namespace ClientNamespace {
 			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
 			userData.OnGameEndedMessage += OnUnhandledMessage;
 			userData.OnGameStartedMessage += OnUnhandledMessage;
-			//userData.OnUserJoinedMessage += OnUnhandledMessage;
-			//userData.OnUserLeftMessage += OnUnhandledMessage;
 
 			LoadCommands();
 
@@ -99,13 +97,15 @@ namespace ClientNamespace {
 		}
 		private void OnSayMessage(string sender, string message)
 		{
-			if(userData.Name != sender)
-			SafePrint(sender + " says: \"" + message + "\"");
+			if(userData.Name != sender) {
+				SafePrint(sender + " says: \"" + message + "\"");
+			}
 		}
 		private void OnUserJoinedMessage(string player)
 		{
-			if(userData.Name != player)
+			if(userData.Name != player) {
 				SafePrint(player + " has joined the room");
+			}
 		}
 		private void OnUserLeftMessage(string player)
 		{
