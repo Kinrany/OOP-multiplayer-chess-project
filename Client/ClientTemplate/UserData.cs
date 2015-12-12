@@ -17,9 +17,10 @@ namespace ClientNamespace
 			this.networking.OnChallengeRevokedMessage += delegate(string s) { OnChallengeRevokedMessage(s); };
 			this.networking.OnGameStartedMessage += delegate() { OnGameStartedMessage(); };
 			this.networking.OnGameEndedMessage += delegate() { OnGameEndedMessage(); };
+			this.networking.OnSayMessage += delegate(string s,string m) { OnSayMessage(s,m); };
 
-            this.networking.OnConnected += delegate() { OnConnected(); };
-            this.networking.OnJoinedRoom += delegate() { OnJoinedRoom(); };
+			this.networking.OnConnected += delegate() { OnConnected(); };
+			this.networking.OnJoinedRoom += delegate() { OnJoinedRoom(); };
 		}
 		
 		public string Name = "Forgettable Frank";
@@ -58,33 +59,38 @@ namespace ClientNamespace
 			}
 		}
 		
-        public void Connect(string playerName) 
-        {
-            networking.Connect(playerName);
+		public void Connect(string playerName) 
+		{
+			networking.Connect(playerName);
 		}
-        public void JoinRoom(string roomType)
-        {
-            networking.JoinRoom(roomType);
-        }
+		public void JoinRoom(string roomType)
+		{
+			networking.JoinRoom(roomType);
+		}
 		public void ChallengePlayer(string name)
 		{
 			networking.ChallengePlayer(name);
+		}
+		public void SayMessage(string message)
+		{
+			networking.Say(message);
 		}
 
 		public bool IsPlaying = false;
 		
 		// "= delegate { }" спасает от исключения, если нет подписчиков
 		public event Networking.UnknownMessageDelegate OnUnknownMessage = delegate { };
-        public event Networking.DeniedMessageDelegate OnDeniedMessage = delegate { };
-        public event Networking.UserJoinedMessageDelegate OnUserJoinedMessage = delegate { };
-        public event Networking.UserLeftMessageDelegate OnUserLeftMessage = delegate { };
-        public event Networking.ChallengedMessageDelegate OnChallengedMessage = delegate { };
-        public event Networking.ChallengeRevokedMessageDelegate OnChallengeRevokedMessage = delegate { };
-        public event Networking.GameStartedMessageDelegate OnGameStartedMessage = delegate { };
-        public event Networking.GameEndedMessageDelegate OnGameEndedMessage = delegate { };
+		public event Networking.DeniedMessageDelegate OnDeniedMessage = delegate { };
+		public event Networking.UserJoinedMessageDelegate OnUserJoinedMessage = delegate { };
+		public event Networking.UserLeftMessageDelegate OnUserLeftMessage = delegate { };
+		public event Networking.ChallengedMessageDelegate OnChallengedMessage = delegate { };
+		public event Networking.ChallengeRevokedMessageDelegate OnChallengeRevokedMessage = delegate { };
+		public event Networking.GameStartedMessageDelegate OnGameStartedMessage = delegate { };
+		public event Networking.GameEndedMessageDelegate OnGameEndedMessage = delegate { };
+		public event Networking.SayMessageDelegate OnSayMessage = delegate { };
 
-        public event Networking.ConnectedDelegate OnConnected = delegate { };
-        public event Networking.JoinedRoomDelegate OnJoinedRoom = delegate { };
+		public event Networking.ConnectedDelegate OnConnected = delegate { };
+		public event Networking.JoinedRoomDelegate OnJoinedRoom = delegate { };
 		
 		Networking networking;
 		private string opponent = null;

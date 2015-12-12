@@ -6,6 +6,8 @@ namespace ClientNamespace {
 		public Networking() {
 			client = null;
 			connection = null;
+
+			LoadMessages();
 		}
 
 		/// <summary>

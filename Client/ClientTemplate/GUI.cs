@@ -13,13 +13,14 @@ namespace ClientNamespace {
 			userData.OnConnected += OnConnect;
 			userData.OnDeniedMessage += OnDeniedMessage;
 			userData.OnJoinedRoom += OnJoined;
+			userData.OnSayMessage += OnSayMessage;
+			userData.OnUserJoinedMessage += OnUserJoinedMessage;
+			userData.OnUserLeftMessage += OnUserLeftMessage;
 			userData.OnUnknownMessage += OnUnknownMessage;
 
 			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
 			userData.OnGameEndedMessage += OnUnhandledMessage;
 			userData.OnGameStartedMessage += OnUnhandledMessage;
-			userData.OnUserJoinedMessage += OnUnhandledMessage;
-			userData.OnUserLeftMessage += OnUnhandledMessage;
 
 			LoadCommands();
 
@@ -93,6 +94,22 @@ namespace ClientNamespace {
 		private void OnChallengedMessage(string nemesis)
 		{
 			SafePrint("Challenged by " + nemesis);
+		}
+		private void OnSayMessage(string sender, string message)
+		{
+			if(userData.Name != sender) {
+				SafePrint(sender + " says: \"" + message + "\"");
+			}
+		}
+		private void OnUserJoinedMessage(string player)
+		{
+			if(userData.Name != player) {
+				SafePrint(player + " has joined the room");
+			}
+		}
+		private void OnUserLeftMessage(string player)
+		{
+			SafePrint(player + " has left the room");
 		}
 		private void OnUnhandledMessage()
 		{
