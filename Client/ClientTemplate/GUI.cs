@@ -63,6 +63,10 @@ namespace ClientNamespace {
 
 		private void ProcessCommand(string input) 
 		{
+			if (input == "") {
+				return;
+			}
+
 			Match m = Regex.Match(input, @"^(\S+)\s*(\S.*)?$");
 			string command = m.Groups[1].ToString();
 			string args = m.Groups[2].ToString();

@@ -13,7 +13,6 @@ namespace ClientNamespace
 
 		// Загружает команды в словарь commands
 		private void LoadCommands() {
-			commands.Add("", delegate(string args) { });
 			commands.Add("join", join);
 			commands.Add("joined", joined);
 			commands.Add("connect", connect);
