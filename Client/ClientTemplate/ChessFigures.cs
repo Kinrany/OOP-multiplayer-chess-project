@@ -51,19 +51,6 @@ namespace ClientNamespace
 
 		private void LoadDefaultFigures()
 		{
-			/*figures["K"] = ChessFigure.WhiteKing;
-			figures["Q"] = ChessFigure.WhiteQueen;
-			figures["R"] = ChessFigure.WhiteRook;
-			figures["B"] = ChessFigure.WhiteBishop;
-			figures["N"] = ChessFigure.WhiteKnight;
-			figures["P"] = ChessFigure.WhitePawn;
-			figures["k"] = ChessFigure.BlackKing;
-			figures["q"] = ChessFigure.BlackQueen;
-			figures["r"] = ChessFigure.BlackRook;
-			figures["b"] = ChessFigure.BlackBishop;
-			figures["n"] = ChessFigure.BlackKnight;
-			figures["p"] = ChessFigure.BlackPawn;*/
-
 			figures["K"] = ChessFigure.K;
 			figures["Q"] = ChessFigure.Q;
 			figures["R"] = ChessFigure.R;
@@ -81,19 +68,6 @@ namespace ClientNamespace
 
 	enum ChessFigure
 	{
-		/*BlackKing = -6,
-		BlackQueen,
-		BlackRook,
-		BlackBishop,
-		BlackKnight,
-		BlackPawn,
-		None,
-		WhiteKing,
-		WhiteQueen,
-		WhiteRook,
-		WhiteBishop,
-		WhiteKnight,
-		WhitePawn*/
 		k = -6,
 		q,
 		r,
