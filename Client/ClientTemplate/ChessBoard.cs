@@ -11,12 +11,12 @@ namespace ClientNamespace
 		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2)
 		{
 			this[position2] = this[position1];
-			this[position1] = ChessFigure.None;
+			this[position1] = ChessFigure._;
 		}
 
 		public void CreateFigure(ChessFigurePosition position, ChessFigure figure)
 		{
-			if (this[position] == ChessFigure.None)
+			if (this[position] == ChessFigure._)
 			{
 				this[position] = figure;
 			}
@@ -27,9 +27,9 @@ namespace ClientNamespace
 
 		public void DeleteFigure(ChessFigurePosition position)
 		{
-			if (this[position] != ChessFigure.None)
+			if (this[position] != ChessFigure._)
 			{
-				this[position] = ChessFigure.None;
+				this[position] = ChessFigure._;
 			}
 			else {
 				throw new InvalidOperationException("There are no chess figures at this position.");
@@ -40,11 +40,11 @@ namespace ClientNamespace
 		{
 			get
 			{
-				return Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_COLUMN];
+				return Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_ROW];
 			}
 			set
 			{
-				Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_COLUMN] = value;
+				Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_ROW] = value;
 			}
 		}
 
@@ -118,7 +118,7 @@ namespace ClientNamespace
 		/// Создаёт новые координаты на шахматном поле по строке формата "A1".
 		/// </summary>
 		/// <param name="str"></param>
-		public ChessFigurePosition(string str) : this(str[0], (int)(str[1] - '0')) { }
+		public ChessFigurePosition(string str) : this(str[0],(int)('9' - str[1])) { }
 
 		public char Column
 		{

@@ -9,7 +9,7 @@ namespace ClientNamespace
 	{
 		public bool MovementValidationPawn(ChessBoard board, ChessFigurePosition position, ChessFigurePosition destination)
 		{
-			if (board[destination] == ChessFigure.None)
+			if (board[destination] == ChessFigure._)
 			{
 				if(position.Column == 1 && position.Row + 2 == destination.Row)
 				{
@@ -62,7 +62,7 @@ namespace ClientNamespace
 				if (position.Column == destination.Column && position.Row == destination.Row)
 					return true;
 
-				if (board[position] != ChessFigure.None) //препятсвие
+				if (board[position] != ChessFigure._) //препятсвие
 					return false;
 				if ((position.Column == destination.Column && position.Row != destination.Row)
 														  ||
@@ -120,7 +120,7 @@ namespace ClientNamespace
 				if (position.Column == destination.Column && position.Row == destination.Row)
 					return true;
 
-				if (board[position] != ChessFigure.None) //препятсвие
+				if (board[position] != ChessFigure._) //препятсвие
 					return false;
 			}
 		}
@@ -148,7 +148,7 @@ namespace ClientNamespace
 				if (position.Column == destination.Column && position.Row == destination.Row)
 					return true;
 
-				if (board[position] != ChessFigure.None) //препятсвие
+				if (board[position] != ChessFigure._) //препятсвие
 					return false;
 			}
 		}

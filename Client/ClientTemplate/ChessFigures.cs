@@ -20,7 +20,7 @@ namespace ClientNamespace
 				return figure;
 			}
 			else {
-				return ChessFigure.None;
+				return ChessFigure._;
 			}
 		}
 
@@ -39,7 +39,7 @@ namespace ClientNamespace
 				}
 				for (int col = rows[row].Length; col < board.Columns; ++col)
 				{
-					board.Array[col, row] = ChessFigure.None;
+					board.Array[col, row] = ChessFigure._;
 				}
 			}
 
@@ -100,7 +100,7 @@ namespace ClientNamespace
 		b,
 		n,
 		p,
-		None,
+		_,
 		K,
 		Q,
 		R,
