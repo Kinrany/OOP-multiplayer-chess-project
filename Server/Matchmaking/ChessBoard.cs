@@ -29,6 +29,15 @@ namespace Matchmaking {
 			}
 		}
 
+		public void ReplaceFigure(ChessFigurePosition position, ChessFigure figure) {
+			if (this[position] != ChessFigure.None) {
+				this[position] = figure;
+			}
+			else {
+				throw new InvalidOperationException("There's no figure at this position.");
+			}
+		}
+
 		public ChessFigure this[ChessFigurePosition position] {
 			get {
 				return Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_ROW];

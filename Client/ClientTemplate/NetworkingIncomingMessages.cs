@@ -23,6 +23,7 @@ namespace ClientNamespace {
 			messages["Create figure"]     = delegate(Message m) { OnCreateFigureMessage    ((string)m[0], (string)m[1], (string)m[2]); };
 			messages["Move figure"]       = delegate(Message m) { OnMoveFigureMessage      ((string)m[0], (string)m[1], (string)m[2]); };
 			messages["Delete figure"]     = delegate(Message m) { OnDeleteFigureMessage    ((string)m[0], (string)m[1]              ); };
+			messages["Replace figure"]    = delegate(Message m) { OnReplaceFigureMessage   ((string)m[0], (string)m[1], (string)m[2]); };
 		}
 	}
 }

@@ -43,6 +43,11 @@ namespace Matchmaking {
 		public void DeleteFigure(string position) {
 			board.DeleteFigure(new ChessFigurePosition(position));
 		}
+		public void ReplaceFigure(string position, string figure) {
+			board.ReplaceFigure(
+				new ChessFigurePosition(position),
+				figures.LoadFigure(figure));
+		}
 
 		private Player player1, player2;
 
