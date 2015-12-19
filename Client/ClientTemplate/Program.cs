@@ -5,7 +5,8 @@ namespace ClientNamespace {
 		static void Main(string[] args) {
 			networking = new Networking();
 			userData = new UserData(networking);
-			gui = new GUI(userData);
+			gameData = new GameData(networking);
+			gui = new GUI(userData,gameData);
 			gui.StartLoop();
 
 			while (!gui.Esc);
@@ -14,5 +15,6 @@ namespace ClientNamespace {
 		static Networking networking;
 		static GUI gui;
 		static UserData userData;
+		static GameData gameData;
 	}
 }

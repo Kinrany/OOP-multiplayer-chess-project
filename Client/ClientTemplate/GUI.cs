@@ -5,8 +5,10 @@ using System.Threading;
 
 namespace ClientNamespace {
 	partial class GUI {
-		public GUI(UserData userData) {
+		public GUI(UserData userData,GameData gameData)
+		{
 			this.userData = userData;
+			this.gameData = gameData;
 			Esc = false;
 
 			userData.OnChallengedMessage += OnChallengedMessage;
@@ -133,6 +135,7 @@ namespace ClientNamespace {
 		private static Queue<string> stringsToWrite = new Queue<string>();
 
 		private UserData userData;
+		private GameData gameData;
 		private Timer timer;
 	}
 }

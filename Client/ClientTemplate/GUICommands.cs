@@ -22,6 +22,8 @@ namespace ClientNamespace
 			commands.Add("say", say);
 			commands.Add("challenge", challenge);
 			commands.Add("help", help);
+			commands.Add("print", print);
+			commands.Add("move", move);
 		}
 
 		// Соединяет с комнатой
@@ -150,6 +152,44 @@ namespace ClientNamespace
 				text += ".";
 			}
 			SafePrint(text);
+		}
+
+		void print(string args)
+		{
+			string res_board = "";
+			for (int row = gameData.Board.Columns - 1; row >= 0; row--)
+			{
+				res_board += (row + 1) + "  ";
+				for (int col = 0; col < gameData.Board.Rows; col++)
+					res_board += gameData.Board.Array[col, row] + " ";
+				res_board += "\n";
+			}
+			res_board += "\n   A B C D E F G H\n";
+			SafePrint(res_board);
+		}
+
+		void move(string args)
+		{
+			string[] positions = args.Split(new char[] { ' ', '\t', '-' }, StringSplitOptions.RemoveEmptyEntries);
+			if (positions.Length != 2)
+				SafePrint("U WOT M8??!1!!");
+			else
+			{
+				ChessFigurePosition tmp1 = new ChessFigurePosition(positions[0]);
+				ChessFigurePosition tmp2 = new ChessFigurePosition(positions[1]);
+				if (gameData.Board[tmp1] == ChessFigure._)
+				{
+					SafePrint("Cant move the non-existent figure");
+					return;
+				}
+				if (positions[0] == positions[1])
+				{
+					SafePrint("You cant move yourself");
+					return;
+				}
+				gameData.MoveFigure(tmp1,tmp2, positions[0], positions[1]);
+				print(args);
+			}
 		}
 	}
 }
