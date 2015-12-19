@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using PlayerIO.GameLibrary;
 
 namespace Matchmaking {
-	[RoomType("Matchmaking v1.3")]
+	[RoomType("Matchmaking v1.4")]
 	public partial class Game : Game<Player> {
 
 		public Game() : base() {

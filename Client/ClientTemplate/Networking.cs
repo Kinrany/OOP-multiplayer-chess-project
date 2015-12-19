@@ -82,6 +82,9 @@ namespace ClientNamespace {
 		public void ReplaceFigure(string position, string figure) {
 			connection.Send("Replace figure", position, figure);
 		}
+		public void StopGame() {
+			connection.Send("Stop game");
+		}
 
 		// События для обработки входящих сообщений
 		public event UnknownMessageDelegate OnUnknownMessage = delegate { };
