@@ -31,10 +31,10 @@ namespace Matchmaking {
 
 		public ChessFigure this[ChessFigurePosition position] {
 			get {
-				return Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_COLUMN];
+				return Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_ROW];
 			}
 			set {
-				Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_COLUMN] = value;
+				Array[position.Column - ChessFigurePosition.MIN_COLUMN, position.Row - ChessFigurePosition.MIN_ROW] = value;
 			}
 		}
 
