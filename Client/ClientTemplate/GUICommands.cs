@@ -187,8 +187,10 @@ namespace ClientNamespace
 					SafePrint("You cant move yourself");
 					return;
 				}
-				gameData.Board[tmp2] = gameData.Board[tmp1];
-				gameData.Board[tmp1] = ChessFigure._;
+				//gameData.Board[tmp2] = gameData.Board[tmp1];
+				//gameData.Board[tmp1] = ChessFigure._;
+				//gameData.Board.MoveFigure(tmp1,tmp2);
+				gameData.MoveFigure(tmp1,tmp2, positions[0], positions[1]);
 				print(args);
 			}
 		}

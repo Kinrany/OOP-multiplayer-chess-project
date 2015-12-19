@@ -37,6 +37,12 @@ namespace ClientNamespace
 			NewGame();
 		}
 
+		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2,string a,string b)
+		{
+			networking.MoveFigure(a, b);
+			board.MoveFigure(position1, position2);
+		}
+
 		private void GameEndedHandler() { }
 	}
 }
