@@ -59,6 +59,9 @@ namespace Matchmaking {
 			P P P P P P P P
 			R N B Q K B N R";
 
+		/// <summary>
+		/// Массив фигур с доступом по координатам. (x, y) соответствует колонке x, строке y.
+		/// </summary>
 		public ChessFigure[,] Array = new ChessFigure[
 			ChessFigurePosition.MAX_COLUMN - ChessFigurePosition.MIN_COLUMN + 1,
 			ChessFigurePosition.MAX_ROW - ChessFigurePosition.MIN_ROW + 1];
