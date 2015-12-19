@@ -48,18 +48,6 @@ namespace ClientNamespace
 			}
 		}
 
-		public override string ToString()
-		{
-			string res_board = "";
-			for (int collum = 0; collum < Columns; collum++)
-			{
-				for (int row = 0; row < Rows; row++)
-					res_board += Array[row, collum] + " ";
-				res_board += "\n";
-			}
-			return res_board;
-		}
-
 		public int Columns
 		{
 			get
