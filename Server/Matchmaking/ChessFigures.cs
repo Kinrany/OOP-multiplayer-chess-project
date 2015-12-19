@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace Matchmaking {
-	class ChessFigures {
+	public class ChessFigures {
 		public ChessFigures() {
 			LoadDefaultFigures();
 		}
@@ -20,7 +20,10 @@ namespace Matchmaking {
 		}
 
 		public string SaveFigure(ChessFigure figure) {
-			return figureCodes[figure];
+			if (figure == ChessFigure.None)
+				return ".";
+			else
+				return figureCodes[figure];
 		}
 
 		public ChessBoard LoadBoard(string savedBoard) {
@@ -79,7 +82,7 @@ namespace Matchmaking {
 		}
 	}
 
-	enum ChessFigure {
+	public enum ChessFigure {
 		None,
 		WhiteKing,
 		WhiteQueen,
