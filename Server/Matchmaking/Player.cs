@@ -49,10 +49,6 @@ namespace Matchmaking {
 				GameModel model = new GameModel(this, other);
 				this.GameCreated(model);
 				other.GameCreated(model);
-
-				game.ScheduleCallback(delegate () {
-					this.model.Stop();
-				}, 1000);
 			}
 		}
 

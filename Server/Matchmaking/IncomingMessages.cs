@@ -18,6 +18,7 @@ namespace Matchmaking {
 			incomingMessages["Move figure"] = move_figure;
 			incomingMessages["Delete figure"] = delete_figure;
 			incomingMessages["Replace figure"] = replace_figure;
+			incomingMessages["Stop game"] = stop_game;
 		}
 
 		private void challenge_player(Player player, Message message) {
@@ -95,6 +96,13 @@ namespace Matchmaking {
 			catch (Exception e) {
 				Log("Replace figure message processing failed.", e);
 				player.Send("Denied", "Incorrect message format.");
+			}
+		}
+
+		private void stop_game(Player player, Message message) {
+			if (player.GameModel == null) {
+				Log("Player tried to stop game, but they are not playing.");
+				player.Send("Denied", "You are not playing.");
 			}
 		}
 	}

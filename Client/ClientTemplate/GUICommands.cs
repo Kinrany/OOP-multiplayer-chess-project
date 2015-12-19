@@ -27,7 +27,7 @@ namespace ClientNamespace
 		// Соединяет с комнатой
 		void join(string args)
 		{
-			string roomType = "Matchmaking v1.3";
+			string roomType = "Matchmaking v1.4";
 			if (args.Length > 0) 
 			{
 				roomType = args;
