@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace Matchmaking {
-	class ChessBoard {
+	public class ChessBoard {
 
 		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2) {
 			this[position2] = this[position1];
@@ -59,12 +59,15 @@ namespace Matchmaking {
 			P P P P P P P P
 			R N B Q K B N R";
 
+		/// <summary>
+		/// Массив фигур с доступом по координатам. (x, y) соответствует колонке x, строке y.
+		/// </summary>
 		public ChessFigure[,] Array = new ChessFigure[
 			ChessFigurePosition.MAX_COLUMN - ChessFigurePosition.MIN_COLUMN + 1,
 			ChessFigurePosition.MAX_ROW - ChessFigurePosition.MIN_ROW + 1];
 	}
 
-	struct ChessFigurePosition {
+	public struct ChessFigurePosition {
 
 		/// <summary>
 		/// Создаёт новые координаты на шахматном поле по букве и номеру строки.

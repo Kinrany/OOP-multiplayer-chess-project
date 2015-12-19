@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace Matchmaking {
-	class ChessFigures {
+	public class ChessFigures {
 		public ChessFigures() {
 			LoadDefaultFigures();
 		}
@@ -19,10 +19,17 @@ namespace Matchmaking {
 			}
 		}
 
+		public string SaveFigure(ChessFigure figure) {
+			if (figure == ChessFigure.None)
+				return ".";
+			else
+				return figureCodes[figure];
+		}
+
 		public ChessBoard LoadBoard(string savedBoard) {
 			ChessBoard board = new ChessBoard();
 
-			string[] rows = savedBoard.Split(new char[] {'\n'}, StringSplitOptions.RemoveEmptyEntries);
+			string[] rows = savedBoard.Split(new char[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
 			for (int row = board.Rows - 1; row >= 0; --row) {
 				string[] columns = rows[row].Split(new char[] {' ', '\t'}, StringSplitOptions.RemoveEmptyEntries);
 				for (int col = 0; col < board.Columns && col < rows[row].Length; ++col) {
@@ -36,26 +43,46 @@ namespace Matchmaking {
 			return board;
 		}
 
+		public string SaveBoard(ChessBoard board) {
+			StringBuilder savedBoard = new StringBuilder("");
+
+			for (int row = board.Rows - 1; row >= 0; --row) {
+				for (int col = 0; col < board.Columns; ++col) {
+					savedBoard.Append(SaveFigure(board.Array[col, row]));
+					savedBoard.Append(' ');
+				}
+				savedBoard.Append('\n');
+			}
+
+			return savedBoard.ToString();
+		}
+
 
 		private Dictionary<string, ChessFigure> figures = new Dictionary<string, ChessFigure>();
+		private Dictionary<ChessFigure, string> figureCodes = new Dictionary<ChessFigure, string>();
 
 		private void LoadDefaultFigures() {
-			figures["K"] = ChessFigure.WhiteKing;
-			figures["Q"] = ChessFigure.WhiteQueen;
-			figures["R"] = ChessFigure.WhiteRook;
-			figures["B"] = ChessFigure.WhiteBishop;
-			figures["N"] = ChessFigure.WhiteKnight;
-			figures["P"] = ChessFigure.WhitePawn;
-			figures["k"] = ChessFigure.BlackKing;
-			figures["q"] = ChessFigure.BlackQueen;
-			figures["r"] = ChessFigure.BlackRook;
-			figures["b"] = ChessFigure.BlackBishop;
-			figures["n"] = ChessFigure.BlackKnight;
-			figures["p"] = ChessFigure.BlackPawn;
+			AddFigure("K", ChessFigure.WhiteKing);
+			AddFigure("Q", ChessFigure.WhiteQueen);
+			AddFigure("R", ChessFigure.WhiteRook);
+			AddFigure("B", ChessFigure.WhiteBishop);
+			AddFigure("N", ChessFigure.WhiteKnight);
+			AddFigure("P", ChessFigure.WhitePawn);
+			AddFigure("k", ChessFigure.BlackKing);
+			AddFigure("q", ChessFigure.BlackQueen);
+			AddFigure("r", ChessFigure.BlackRook);
+			AddFigure("b", ChessFigure.BlackBishop);
+			AddFigure("n", ChessFigure.BlackKnight);
+			AddFigure("p", ChessFigure.BlackPawn);
+		}
+
+		private void AddFigure(string code, ChessFigure figure) {
+			figures[code] = figure;
+			figureCodes[figure] = code;
 		}
 	}
 
-	enum ChessFigure {
+	public enum ChessFigure {
 		None,
 		WhiteKing,
 		WhiteQueen,
