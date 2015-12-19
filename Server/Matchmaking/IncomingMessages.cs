@@ -17,6 +17,7 @@ namespace Matchmaking {
 			incomingMessages["Create figure"] = create_figure;
 			incomingMessages["Move figure"] = move_figure;
 			incomingMessages["Delete figure"] = delete_figure;
+			incomingMessages["Replace figure"] = replace_figure;
 		}
 
 		private void challenge_player(Player player, Message message) {
@@ -80,6 +81,19 @@ namespace Matchmaking {
 			}
 			catch (Exception e) {
 				Log("Delete figure message processing failed.", e);
+				player.Send("Denied", "Incorrect message format.");
+			}
+		}
+
+		private void replace_figure(Player player, Message message) {
+			try {
+				string position = message.GetString(0);
+				string figure = message.GetString(1);
+				player.GameModel.ReplaceFigure(position, figure);
+				Broadcast("Replace figure", player.ConnectUserId, position, figure);
+			}
+			catch (Exception e) {
+				Log("Replace figure message processing failed.", e);
 				player.Send("Denied", "Incorrect message format.");
 			}
 		}
