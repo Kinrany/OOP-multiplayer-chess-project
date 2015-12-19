@@ -79,6 +79,9 @@ namespace ClientNamespace {
 		public void DeleteFigure(string position) {
 			connection.Send("Delete figure", position);
 		}
+		public void ReplaceFigure(string position, string figure) {
+			connection.Send("Replace figure", position, figure);
+		}
 
 		// События для обработки входящих сообщений
 		public event UnknownMessageDelegate OnUnknownMessage = delegate { };
@@ -92,6 +95,7 @@ namespace ClientNamespace {
 		public event CreateFigureMessageDelegate OnCreateFigureMessage = delegate { };
 		public event MoveFigureMessageDelegate OnMoveFigureMessage = delegate { };
 		public event DeleteFigureMessageDelegate OnDeleteFigureMessage = delegate { };
+		public event ReplaceFigureMessageDelegate OnReplaceFigureMessage = delegate { };
 		public event SayMessageDelegate OnSayMessage = delegate { };
 		// Делегаты для обработки входящих сообщений
 		public delegate void UnknownMessageDelegate(string messageType);
@@ -106,6 +110,7 @@ namespace ClientNamespace {
 		public delegate void CreateFigureMessageDelegate(string playername, string position, string figure);
 		public delegate void MoveFigureMessageDelegate(string playername, string position1, string position2);
 		public delegate void DeleteFigureMessageDelegate(string playername, string position);
+		public delegate void ReplaceFigureMessageDelegate(string playername, string position, string figure);
 
 
 		/// <summary>
