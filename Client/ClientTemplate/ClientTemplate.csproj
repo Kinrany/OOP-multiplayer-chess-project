@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="ChessBoard.cs" />
     <Compile Include="ChessFigures.cs" />
-    <Compile Include="ChessMove.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="GUICommands.cs" />
