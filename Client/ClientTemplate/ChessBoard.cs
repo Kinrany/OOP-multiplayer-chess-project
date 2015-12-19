@@ -118,7 +118,7 @@ namespace ClientNamespace
 		/// Создаёт новые координаты на шахматном поле по строке формата "A1".
 		/// </summary>
 		/// <param name="str"></param>
-		public ChessFigurePosition(string str) : this(str[0],(int)('9' - str[1])) { }
+		public ChessFigurePosition(string str) : this(str[0], (int)(str[1] - '0')) { }
 
 		public char Column
 		{

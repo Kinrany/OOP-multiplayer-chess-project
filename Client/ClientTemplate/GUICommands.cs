@@ -157,7 +157,7 @@ namespace ClientNamespace
 		void print(string args)
 		{
 			string res_board = "";
-			for (int col = 0; col < gameData.Board.Columns; col++)
+			for (int col = gameData.Board.Columns - 1; col >= 0; col--)
 			{
 				res_board += (8 - col) + "  ";
 				for (int row = 0; row < gameData.Board.Rows; row++)
@@ -187,7 +187,6 @@ namespace ClientNamespace
 					SafePrint("You cant move yourself");
 					return;
 				}
-				
 				gameData.MoveFigure(tmp1,tmp2, positions[0], positions[1]);
 				print(args);
 			}
