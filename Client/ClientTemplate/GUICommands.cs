@@ -157,11 +157,11 @@ namespace ClientNamespace
 		void print(string args)
 		{
 			string res_board = "";
-			for (int col = gameData.Board.Columns - 1; col >= 0; col--)
+			for (int row = gameData.Board.Columns - 1; row >= 0; row--)
 			{
-				res_board += (8 - col) + "  ";
-				for (int row = 0; row < gameData.Board.Rows; row++)
-					res_board += gameData.Board.Array[row, col] + " ";
+				res_board += (row + 1) + "  ";
+				for (int col = 0; col < gameData.Board.Rows; col++)
+					res_board += gameData.Board.Array[col, row] + " ";
 				res_board += "\n";
 			}
 			res_board += "\n   A B C D E F G H\n";
