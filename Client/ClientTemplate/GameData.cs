@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +11,6 @@ namespace ClientNamespace
 		{
 			this.networking = networking;
 			this.networking.OnMoveFigureMessage += OnMoveFigureMessage;
-			//this.networking.OnMoveFigureMessage += delegate (string p, string f, string t) { OnMoveFigureMessage(p, f, t); };
 			this.networking.OnMoveFigureMessage += delegate (string p, string f, string t) { GUIMove(p, f, t); };
 			networking.OnGameStartedMessage += GameStartedHandler;
 			networking.OnGameEndedMessage += GameEndedHandler;
