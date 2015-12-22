@@ -23,7 +23,7 @@ namespace ClientNamespace {
 			userData.OnChallengeRevokedMessage += OnUnhandledMessage;
 			userData.OnGameEndedMessage += OnUnhandledMessage;
 			userData.OnGameStartedMessage += OnUnhandledMessage;
-
+			gameData.GUIMove += GUIMove;
 			LoadCommands();
 
 			// Таймер для регулярного вызова Loop
@@ -118,6 +118,11 @@ namespace ClientNamespace {
 			else { 
 				SafePrint(player + " has joined the room");
 			}
+		}
+		private void GUIMove(string p, string f, string t)
+		{
+			print(p);
+			SafePrint(p + "has made a move" + f + "-" + t);
 		}
 		private void OnUserLeftMessage(string player)
 		{

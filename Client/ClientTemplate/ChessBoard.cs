@@ -10,6 +10,13 @@ namespace ClientNamespace
 
 		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2)
 		{
+			if (this[position1] == ChessFigure._) {
+				throw new InvalidOperationException("В выбранной клетке нет фигуры.");
+			}
+			if (position1 == position2) {
+				throw new InvalidOperationException("Нельзя передвинуть на ту же клетку.");
+			}
+
 			this[position2] = this[position1];
 			this[position1] = ChessFigure._;
 		}
@@ -77,24 +84,20 @@ namespace ClientNamespace
 			ChessFigurePosition.MAX_ROW - ChessFigurePosition.MIN_ROW + 1];
 	}
 
-	struct ChessFigurePosition
-	{
+	struct ChessFigurePosition {
 
 		/// <summary>
 		/// Создаёт новые координаты на шахматном поле по букве и номеру строки.
 		/// </summary>
 		/// <param name="column">Буква от MIN_COLUMN до MAX_COLUMN, соответствующая столбцу.</param>
 		/// <param name="row">Число от MIN_ROW до MAX_ROW, соответствующее строке.</param>
-		public ChessFigurePosition(char column, int row)
-		{
+		public ChessFigurePosition(char column, int row) {
 			column = Char.ToUpper(column);
-			if (!isValid(column))
-			{
+			if (!isValid(column)) {
 				throw new ArgumentException(invalidColumn());
 			}
 
-			if (!isValid(row))
-			{
+			if (!isValid(row)) {
 				throw new ArgumentException(invalidRow());
 			}
 
@@ -108,17 +111,13 @@ namespace ClientNamespace
 		/// <param name="str"></param>
 		public ChessFigurePosition(string str) : this(str[0], (int)(str[1] - '0')) { }
 
-		public char Column
-		{
-			get
-			{
+		public char Column {
+			get {
 				return column;
 			}
-			set
-			{
+			set {
 				char upperCase = Char.ToUpper(value);
-				if (isValid(upperCase))
-				{
+				if (isValid(upperCase)) {
 					column = upperCase;
 				}
 				else {
@@ -126,16 +125,12 @@ namespace ClientNamespace
 				}
 			}
 		}
-		public int Row
-		{
-			get
-			{
+		public int Row {
+			get {
 				return row;
 			}
-			set
-			{
-				if (isValid(value))
-				{
+			set {
+				if (isValid(value)) {
 					row = value;
 				}
 				else {
@@ -149,6 +144,14 @@ namespace ClientNamespace
 		public const char MAX_COLUMN = 'H';
 		public const int MIN_ROW = 1;
 		public const int MAX_ROW = 8;
+
+		public static bool operator ==(ChessFigurePosition a, ChessFigurePosition b) {
+			return a.Row == b.Row && a.Column == b.Column;
+		}
+		public static bool operator !=(ChessFigurePosition a, ChessFigurePosition b) {
+			return a.Row != b.Row || a.Column != b.Column;
+		}
+
 
 		private static bool isValid(char column)
 		{
