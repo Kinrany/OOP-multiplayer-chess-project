@@ -175,19 +175,13 @@ namespace ClientNamespace
 				SafePrint("U WOT M8??!1!!");
 			else
 			{
-				ChessFigurePosition tmp1 = new ChessFigurePosition(positions[0]);
-				ChessFigurePosition tmp2 = new ChessFigurePosition(positions[1]);
-				if (gameData.Board[tmp1] == ChessFigure._)
-				{
-					SafePrint("Cant move the non-existent figure");
-					return;
+				try {
+					gameData.MoveFigure(positions[0], positions[1]);
 				}
-				if (positions[0] == positions[1])
-				{
-					SafePrint("You cant move yourself");
-					return;
+				catch (InvalidOperationException e) {
+					SafePrint(e.Message);
 				}
-				gameData.MoveFigure(tmp1,tmp2, positions[0], positions[1]);
+
 				print(args);
 			}
 		}

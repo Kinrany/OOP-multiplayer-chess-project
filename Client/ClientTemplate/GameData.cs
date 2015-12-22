@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,9 +27,19 @@ namespace ClientNamespace {
 			board = figures.LoadBoard(ChessBoard.DefaultBoard);
 		}
 
-		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2,string a,string b) {
-			networking.MoveFigure(a, b);
-			board.MoveFigure(position1, position2);
+		public void MoveFigure(string from, string to) {
+			ChessFigurePosition positionFrom = new ChessFigurePosition(from);
+			ChessFigurePosition positionTo = new ChessFigurePosition(to);
+
+			if (Board[positionFrom] == ChessFigure._) {
+				throw new InvalidOperationException("В выбранной клетке нет фигуры.");
+			}
+			if (positionFrom == positionTo) {
+				throw new InvalidOperationException("Нельзя передвинуть на ту же клетку.");
+			}
+
+			board.MoveFigure(positionFrom, positionTo);
+			networking.MoveFigure(from, to);
 		}
 		
 		
