@@ -101,7 +101,7 @@ namespace ClientNamespace {
 				SafePrint("You're not in a room.");
 			}
 			else {
-				if (args == "") {
+				if (args != "") {
 					userData.Opponent = args;
 				}
 				else {
