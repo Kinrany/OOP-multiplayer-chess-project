@@ -10,6 +10,13 @@ namespace ClientNamespace
 
 		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2)
 		{
+			if (this[position1] == ChessFigure._) {
+				throw new InvalidOperationException("В выбранной клетке нет фигуры.");
+			}
+			if (position1 == position2) {
+				throw new InvalidOperationException("Нельзя передвинуть на ту же клетку.");
+			}
+
 			this[position2] = this[position1];
 			this[position1] = ChessFigure._;
 		}

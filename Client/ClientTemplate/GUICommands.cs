@@ -177,12 +177,11 @@ namespace ClientNamespace
 			{
 				try {
 					gameData.MoveFigure(positions[0], positions[1]);
+					print(args);
 				}
 				catch (InvalidOperationException e) {
 					SafePrint(e.Message);
 				}
-
-				print(args);
 			}
 		}
 	}

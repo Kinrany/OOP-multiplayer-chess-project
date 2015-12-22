@@ -30,14 +30,6 @@ namespace ClientNamespace {
 		public void MoveFigure(string from, string to) {
 			ChessFigurePosition positionFrom = new ChessFigurePosition(from);
 			ChessFigurePosition positionTo = new ChessFigurePosition(to);
-
-			if (Board[positionFrom] == ChessFigure._) {
-				throw new InvalidOperationException("В выбранной клетке нет фигуры.");
-			}
-			if (positionFrom == positionTo) {
-				throw new InvalidOperationException("Нельзя передвинуть на ту же клетку.");
-			}
-
 			board.MoveFigure(positionFrom, positionTo);
 			networking.MoveFigure(from, to);
 		}
