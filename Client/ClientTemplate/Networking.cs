@@ -111,7 +111,7 @@ namespace ClientNamespace {
 		public delegate void GameEndedMessageDelegate();
 		public delegate void SayMessageDelegate(string playername, string text);
 		public delegate void CreateFigureMessageDelegate(string playername, string position, string figure);
-		public delegate void MoveFigureMessageDelegate(string playername, string from, string to);
+		public delegate void MoveFigureMessageDelegate(string playername, string positionFrom, string positionTo);
 		public delegate void DeleteFigureMessageDelegate(string playername, string position);
 		public delegate void ReplaceFigureMessageDelegate(string playername, string position, string figure);
 
