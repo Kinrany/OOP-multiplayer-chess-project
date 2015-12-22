@@ -123,7 +123,6 @@ namespace ClientNamespace {
 		{
 			print(p);
 			SafePrint(p + "has made a move" + f + "-" + t);
-			//print();
 		}
 		private void OnUserLeftMessage(string player)
 		{
