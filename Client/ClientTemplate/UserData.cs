@@ -58,14 +58,22 @@ namespace ClientNamespace
 				return challenges;
 			}
 		}
-		
-		public void Connect(string playerName) 
-		{
-			networking.Connect(playerName);
+		public string RoomType {
+			get {
+				return roomType;
+			}
+			set {
+				roomType = value;
+			}
 		}
-		public void JoinRoom(string roomType)
+		
+		public void Connect() 
 		{
-			networking.JoinRoom(roomType);
+			networking.Connect(Name);
+		}
+		public void JoinRoom()
+		{
+			networking.JoinRoom(RoomType);
 		}
 		public void ChallengePlayer(string name)
 		{
@@ -74,6 +82,9 @@ namespace ClientNamespace
 		public void SayMessage(string message)
 		{
 			networking.Say(message);
+		}
+		public void StopGame() {
+			networking.StopGame();
 		}
 
 		public bool IsPlaying = false;
@@ -95,5 +106,6 @@ namespace ClientNamespace
 		Networking networking;
 		private string opponent = null;
 		private List<string> challenges = new List<string>();
+		private string roomType = "Matchmaking v1.4";
 	}
 }
