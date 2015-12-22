@@ -75,10 +75,6 @@ namespace ClientNamespace
 		{
 			networking.Say(message);
 		}
-		/*public void Move(ChessFigurePosition position, ChessFigurePosition destination)
-		{
-			networking.MoveFigure(position, destination);
-		}*/
 
 		public bool IsPlaying = false;
 		
