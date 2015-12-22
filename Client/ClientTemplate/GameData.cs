@@ -7,8 +7,10 @@ namespace ClientNamespace
 {
 	class GameData
 	{
-		public GameData(Networking networking) {
+		public GameData(Networking networking)
+		{
 			this.networking = networking;
+			this.networking.OnMoveFigureMessage += OnMoveFigureMessage;
 			networking.OnGameStartedMessage += GameStartedHandler;
 			networking.OnGameEndedMessage += GameEndedHandler;
 
@@ -27,11 +29,6 @@ namespace ClientNamespace
 			get { return board; }
 		}
 
-		private Networking networking;
-		private ChessFigures figures;
-
-		private ChessBoard board;
-
 		private void GameStartedHandler()
 		{
 			NewGame();
@@ -39,10 +36,22 @@ namespace ClientNamespace
 
 		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2,string a,string b)
 		{
-			networking.MoveFigure(a, b);
+			networking.MoveFigure(position1, position2);
 			board.MoveFigure(position1, position2);
 		}
 
+		private void OnMoveFigureMessage(string playername, ChessFigurePosition from, ChessFigurePosition to)
+		{
+			board.MoveFigure(from, to);
+		}
+
+		//public event Networking.MoveFigureMessageDelegate OnMoveFigureMessage = delegate { };
+
 		private void GameEndedHandler() { }
+
+		private Networking networking;
+		private ChessFigures figures;
+
+		private ChessBoard board;
 	}
 }

@@ -73,7 +73,7 @@ namespace ClientNamespace {
 		public void CreateFigure(string position, string figure) {
 			connection.Send("Create figure", position, figure);
 		}
-		public void MoveFigure(string position1, string position2) {
+		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2) {
 			connection.Send("Move figure", position1, position2);
 		}
 		public void DeleteFigure(string position) {
@@ -111,7 +111,7 @@ namespace ClientNamespace {
 		public delegate void GameEndedMessageDelegate();
 		public delegate void SayMessageDelegate(string playername, string text);
 		public delegate void CreateFigureMessageDelegate(string playername, string position, string figure);
-		public delegate void MoveFigureMessageDelegate(string playername, string position1, string position2);
+		public delegate void MoveFigureMessageDelegate(string playername, ChessFigurePosition from, ChessFigurePosition to);
 		public delegate void DeleteFigureMessageDelegate(string playername, string position);
 		public delegate void ReplaceFigureMessageDelegate(string playername, string position, string figure);
 

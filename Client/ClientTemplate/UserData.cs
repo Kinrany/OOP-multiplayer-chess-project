@@ -75,7 +75,7 @@ namespace ClientNamespace
 		{
 			networking.Say(message);
 		}
-		public void Move(string position, string destination)
+		public void Move(ChessFigurePosition position, ChessFigurePosition destination)
 		{
 			networking.MoveFigure(position, destination);
 		}
