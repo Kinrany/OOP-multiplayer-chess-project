@@ -21,7 +21,7 @@ namespace ClientNamespace {
 			messages["Game ended"]        = delegate(Message m) { OnGameEndedMessage       (                                        ); };
 			messages["Say"]               = delegate(Message m) { OnSayMessage             ((string)m[0], (string)m[1]              ); };
 			messages["Create figure"]     = delegate(Message m) { OnCreateFigureMessage    ((string)m[0], (string)m[1], (string)m[2]); };
-			messages["Move figure"]       = delegate(Message m) { OnMoveFigureMessage      ((string)m[0], (ChessFigurePosition)m[1], (ChessFigurePosition)m[2]); };
+			messages["Move figure"]       = delegate(Message m) { OnMoveFigureMessage      ((string)m[0], (string)m[1], (string)m[2]); };
 			messages["Delete figure"]     = delegate(Message m) { OnDeleteFigureMessage    ((string)m[0], (string)m[1]              ); };
 			messages["Replace figure"]    = delegate(Message m) { OnReplaceFigureMessage   ((string)m[0], (string)m[1], (string)m[2]); };
 		}

@@ -11,6 +11,8 @@ namespace ClientNamespace
 		{
 			this.networking = networking;
 			this.networking.OnMoveFigureMessage += OnMoveFigureMessage;
+			//this.networking.OnMoveFigureMessage += delegate (string p, string f, string t) { OnMoveFigureMessage(p, f, t); };
+			this.networking.OnMoveFigureMessage += delegate (string p, string f, string t) { GUIMove(p, f, t); };
 			networking.OnGameStartedMessage += GameStartedHandler;
 			networking.OnGameEndedMessage += GameEndedHandler;
 
@@ -36,16 +38,19 @@ namespace ClientNamespace
 
 		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2,string a,string b)
 		{
-			networking.MoveFigure(position1, position2);
+			networking.MoveFigure(a, b);
 			board.MoveFigure(position1, position2);
 		}
 
-		private void OnMoveFigureMessage(string playername, ChessFigurePosition from, ChessFigurePosition to)
+		private void OnMoveFigureMessage(string playername, string from, string to)
 		{
-			board.MoveFigure(from, to);
+			ChessFigurePosition tmp1 = new ChessFigurePosition(from);
+			ChessFigurePosition tmp2 = new ChessFigurePosition(to);
+			board.MoveFigure(tmp1, tmp2);
+
 		}
 
-		//public event Networking.MoveFigureMessageDelegate OnMoveFigureMessage = delegate { };
+		public event Networking.MoveFigureMessageDelegate GUIMove = delegate { };
 
 		private void GameEndedHandler() { }
 
