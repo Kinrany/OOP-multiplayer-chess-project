@@ -21,19 +21,16 @@ namespace ClientNamespace
 			NewGame();
 		}
 
-		public void NewGame()
-		{
-			board = figures.LoadBoard(ChessBoard.DefaultBoard);
-		}
-
 		public ChessBoard Board
 		{
 			get { return board; }
 		}
 
-		private void GameStartedHandler()
+		public event Networking.MoveFigureMessageDelegate GUIMove = delegate { };
+
+		public void NewGame()
 		{
-			NewGame();
+			board = figures.LoadBoard(ChessBoard.DefaultBoard);
 		}
 
 		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2,string a,string b)
@@ -41,22 +38,25 @@ namespace ClientNamespace
 			networking.MoveFigure(a, b);
 			board.MoveFigure(position1, position2);
 		}
+		
+		
+		private Networking networking;
+		private ChessFigures figures;
+
+		private ChessBoard board;
 
 		private void OnMoveFigureMessage(string playername, string from, string to)
 		{
 			ChessFigurePosition tmp1 = new ChessFigurePosition(from);
 			ChessFigurePosition tmp2 = new ChessFigurePosition(to);
 			board.MoveFigure(tmp1, tmp2);
-
 		}
 
-		public event Networking.MoveFigureMessageDelegate GUIMove = delegate { };
+		private void GameStartedHandler()
+		{
+			NewGame();
+		}
 
 		private void GameEndedHandler() { }
-
-		private Networking networking;
-		private ChessFigures figures;
-
-		private ChessBoard board;
 	}
 }
