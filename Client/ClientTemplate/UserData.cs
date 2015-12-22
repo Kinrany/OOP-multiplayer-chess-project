@@ -75,6 +75,10 @@ namespace ClientNamespace
 		{
 			networking.Say(message);
 		}
+		public void Move(string position, string destination)
+		{
+			networking.MoveFigure(position, destination);
+		}
 
 		public bool IsPlaying = false;
 		
