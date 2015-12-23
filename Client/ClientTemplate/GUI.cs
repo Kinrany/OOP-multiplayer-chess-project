@@ -119,10 +119,10 @@ namespace ClientNamespace {
 				SafePrint(player + " has joined the room");
 			}
 		}
-		private void GUIMove(string p, string f, string t)
+		private void GUIMove(string player, string f, string t)
 		{
-			print(p);
-			SafePrint(p + "has made a move" + f + "-" + t);
+			print(player);
+			SafePrint(player + " has made a move" + f + "-" + t);
 		}
 		private void OnUserLeftMessage(string player)
 		{

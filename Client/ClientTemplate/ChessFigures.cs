@@ -7,8 +7,9 @@ namespace ClientNamespace
 {
 	class ChessFigures
 	{
-		public ChessFigures()
+		public ChessFigures(ChessMoves movement)
 		{
+			this.movement = movement;
 			LoadDefaultFigures();
 		}
 
@@ -64,6 +65,8 @@ namespace ClientNamespace
 			figures["n"] = ChessFigure.n;
 			figures["p"] = ChessFigure.p;
 		}
+
+		private ChessMoves movement;
 	}
 
 	enum ChessFigure

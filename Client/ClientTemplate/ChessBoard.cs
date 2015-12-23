@@ -10,11 +10,31 @@ namespace ClientNamespace
 
 		public void MoveFigure(ChessFigurePosition position1, ChessFigurePosition position2)
 		{
+			bool check = false;
+
 			if (this[position1] == ChessFigure._) {
 				throw new InvalidOperationException("В выбранной клетке нет фигуры.");
 			}
 			if (position1 == position2) {
 				throw new InvalidOperationException("Нельзя передвинуть на ту же клетку.");
+			}
+			if (this[position1] == ChessFigure.p || this[position1] == ChessFigure.P)
+				check = movement.MovementValidationPawn(this, position1, position2);
+			if (this[position1] == ChessFigure.b || this[position1] == ChessFigure.B)
+				check = movement.MovementValidationBishop(this, position1, position2);
+			if (this[position1] == ChessFigure.n || this[position1] == ChessFigure.N)
+				check = movement.MovementValidationKnight(this, position1, position2);
+			if (this[position1] == ChessFigure.r || this[position1] == ChessFigure.R)
+				check = movement.MovementValidationRook(this, position1, position2);
+			if (this[position1] == ChessFigure.q || this[position1] == ChessFigure.Q)
+				check = movement.MovementValidationQueen(this, position1, position2);
+			if (this[position1] == ChessFigure.k || this[position1] == ChessFigure.K)
+				check = movement.MovementValidationKing(this, position1, position2);
+
+			if(!check)
+			{
+				throw new InvalidOperationException("Такой ход невозможен!");
+				return;
 			}
 
 			this[position2] = this[position1];
@@ -82,6 +102,8 @@ namespace ClientNamespace
 		public ChessFigure[,] Array = new ChessFigure[
 			ChessFigurePosition.MAX_COLUMN - ChessFigurePosition.MIN_COLUMN + 1,
 			ChessFigurePosition.MAX_ROW - ChessFigurePosition.MIN_ROW + 1];
+
+		private ChessMoves movement = new ChessMoves();
 	}
 
 	struct ChessFigurePosition {
