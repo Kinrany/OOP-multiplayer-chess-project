@@ -11,22 +11,17 @@ using ClientNamespace;
 
 namespace ClientNamespace
 {
-    public partial class LogInForm : Form
+    partial class LogInForm : Form
     {
-        ChatRoom chatform;
-        public LogInForm()
+		UserData userData;
+        public LogInForm(UserData userData)
         {
-            InitializeComponent();
-        }
-
-        public void setchat(ChatRoom chat)
-        {
-            this.chatform = chat;
+			this.userData = userData;
+			InitializeComponent();
         }
 
         private void exit_button_Click(object sender, EventArgs e)
         {
-            Command.disconnect();
             Application.Exit();
         }
 
@@ -34,29 +29,30 @@ namespace ClientNamespace
         {
             try
             {
-                Command.connect(loginbox.Text);
+				userData.Name = loginbox.Text;
+				userData.Connect();
             }
             catch
             {}
-            if (Command.connected())
+            if (userData.IsConnected)
             {
                 try
                 {
-                    Command.joinroom(roombox.Text);
+					userData.RoomType = roombox.Text;
+					userData.JoinRoom();
                 }
                 catch
                 {}
-                if (Command.joined())
+                if (userData.IsInRoom)
                 {
                     this.Visible = false;
-                    this.chatform.Visible = true;
+					Program.ChatForm.Visible = true;
                 }
             }
         }
 
         private void LogInForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Command.disconnect();
             Application.Exit();
         }
     }

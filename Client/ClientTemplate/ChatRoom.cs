@@ -8,51 +8,84 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClientNamespace
-{
-    public partial class ChatRoom : Form
-    {
-        public int selected_player = 0;
-        LogInForm logform;
-        ChessForm chessform;
+namespace ClientNamespace {
+	partial class ChatRoom : Form {
+		public int selected_player = 0;
 
-        public void setlogform(LogInForm loginform)
-        {
-            this.logform = loginform;
-        }
+		private void showchess(string a) {
+			//Program.ChessForm.Visible = true;
+		}
 
-        public void setchessform(ChessForm chess)
-        {
-            this.chessform = chess;
-        }
+		private void updateuserbox() {
+			userbox.Items.Clear();
+			for (int i = 0; i < userData.Players.Count; ++i) {
+				userbox.Items.Add(userData.Players[i]);
+			}
+		}
 
-        public ChatRoom()
-        {
-            InitializeComponent();
-        }
+		public ChatRoom(UserData userData) {
+			this.userData = userData;
+			InitializeComponent();
+			//userData.OnChallengedMessage += showchess;
+			userData.OnSayMessage += addmsg;
+			userData.OnUserJoinedMessage += userjoin;
+			userData.OnUserLeftMessage += userleft;
+			userData.OnChallengedMessage += challengehandler;
+			userData.OnChallengeRevokedMessage += challendgerevoked;
+			userData.OnGameStartedMessage += UserData_OnGameStartedMessage;
+		}
 
-        private void send_button_Click(object sender, EventArgs e)
-        {
-            Command.say(mesbox.Text);
-            mesbox.Text = "Enter your message here....";
-        }
+		private void challendgerevoked(string username) {
+			chatbox.Text += "Player " + username + @" revoked his challenge.
+";
+		}
 
-        private void userbox_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            string opplogin = userbox.Items[userbox.SelectedIndex].ToString();
-            Command.challendge(opplogin);
-            this.chessform.Visible = true;
-        }
+		private void UserData_OnGameStartedMessage() {
+			//Program.ChessForm = new ChessForm(userData);
+			Program.ChessForm.Show();
+			//Program.ChessForm.Visible = true;
+		}
 
-        private void userbox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            selected_player = userbox.SelectedIndex;
-        }
+		private void challengehandler(string username) {
+			chatbox.Text += "Player " + username + @" challenged you.
+";
+		}
 
-        private void ChatRoom_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Command.disconnect();
-            Application.Exit();
-        }
-    }
+		private void userleft(string username) {
+			updateuserbox();
+			chatbox.Text += "Player " + username + @" disconnected.
+";
+		}
+
+		private void userjoin(string username) {
+			updateuserbox();
+			chatbox.Text += "Player " + username + @" connected.
+";
+		}
+
+		private void addmsg(string playername, string text) {
+			chatbox.Text += "[" + playername + "]: " + text + @"
+";
+		}
+
+		private void send_button_Click(object sender, EventArgs e) {
+			userData.SayMessage(mesbox.Text);
+			mesbox.Text = "Enter your message here....";
+		}
+		private void userbox_MouseDoubleClick(object sender, MouseEventArgs e) {
+			string opplogin = userbox.Items[userbox.SelectedIndex].ToString();
+			userData.ChallengePlayer(opplogin);
+		}
+
+		
+
+		private void userbox_SelectedIndexChanged(object sender, EventArgs e) {
+			selected_player = userbox.SelectedIndex;
+		}
+		private void ChatRoom_FormClosing(object sender, FormClosingEventArgs e) {
+			Application.Exit();
+		}
+
+		private UserData userData;
+	}
 }

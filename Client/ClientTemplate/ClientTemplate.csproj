@@ -64,7 +64,6 @@
     <Compile Include="ChessForm.Designer.cs">
       <DependentUpon>ChessForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Command.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -113,6 +112,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PlayerIOClient.dll" />
+    <None Include="Resources\w_r.png" />
+    <None Include="Resources\w_q.png" />
+    <None Include="Resources\w_p.png" />
+    <None Include="Resources\w_n.png" />
+    <None Include="Resources\w_k.png" />
+    <None Include="Resources\w_b.png" />
+    <None Include="Resources\b_r.png" />
+    <None Include="Resources\b_q.png" />
+    <None Include="Resources\b_p.png" />
+    <None Include="Resources\b_n.png" />
+    <None Include="Resources\b_k.png" />
+    <None Include="Resources\b_b.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

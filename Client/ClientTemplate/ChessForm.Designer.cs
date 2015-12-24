@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // ChessForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 311);
-            this.Name = "ChessForm";
-            this.Text = "ChessForm";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChessForm_FormClosed);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChessForm_FormClosed);
-            this.ResizeEnd += new System.EventHandler(this.ChessForm_Resize);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ChessForm_Paint);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChessForm_MouseClick);
-            this.Resize += new System.EventHandler(this.ChessForm_Resize_1);
-            this.ResumeLayout(false);
+			this.SuspendLayout();
+			// 
+			// ChessForm
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.ClientSize = new System.Drawing.Size(284, 261);
+			this.Name = "ChessForm";
+			this.Text = "ChessForm";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ChessForm_FormClosed);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ChessForm_FormClosed);
+			this.ResizeEnd += new System.EventHandler(this.ChessForm_Resize);
+			this.Paint += new System.Windows.Forms.PaintEventHandler(this.ChessForm_Paint);
+			this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChessForm_MouseClick);
+			this.Resize += new System.EventHandler(this.ChessForm_Resize_1);
+			this.ResumeLayout(false);
 
         }
 
