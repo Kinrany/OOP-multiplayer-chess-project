@@ -58,6 +58,7 @@
     </Compile>
     <Compile Include="ChessBoard.cs" />
     <Compile Include="ChessFigures.cs" />
+    <Compile Include="ChessMove.cs" />
     <Compile Include="ChessForm.cs">
       <SubType>Form</SubType>
     </Compile>
