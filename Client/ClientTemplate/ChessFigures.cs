@@ -68,8 +68,8 @@ namespace ClientNamespace
 
 	enum ChessFigure
 	{
-		k = -6,
-		q,
+		k = -6, 
+		q,      
 		r,
 		b,
 		n,

@@ -11,8 +11,8 @@ namespace ClientNamespace
 			
 			this.networking.OnUnknownMessage += delegate(string s) { OnUnknownMessage(s); };
 			this.networking.OnDeniedMessage += delegate(string s) { OnDeniedMessage(s); };
-			this.networking.OnUserJoinedMessage += delegate(string s) { OnUserJoinedMessage(s); };
-			this.networking.OnUserLeftMessage += delegate(string s) { OnUserLeftMessage(s); };
+			this.networking.OnUserJoinedMessage += OnUserJoinedMessageHandler;
+			this.networking.OnUserLeftMessage += OnUserLeftMessageHandler;
 			this.networking.OnChallengedMessage += delegate(string s) { OnChallengedMessage(s); };
 			this.networking.OnChallengeRevokedMessage += delegate(string s) { OnChallengeRevokedMessage(s); };
 			this.networking.OnGameStartedMessage += delegate() { OnGameStartedMessage(); };
@@ -21,8 +21,10 @@ namespace ClientNamespace
 
 			this.networking.OnConnected += delegate() { OnConnected(); };
 			this.networking.OnJoinedRoom += delegate() { OnJoinedRoom(); };
+			
+			this.networking.OnUserLeftMessage += delegate (string name) { Players.Remove(name); };
 		}
-		
+
 		public string Name = "Forgettable Frank";
 		
 		public bool IsConnected
@@ -66,6 +68,7 @@ namespace ClientNamespace
 				roomType = value;
 			}
 		}
+		public readonly List<string> Players = new List<string>();
 		
 		public void Connect() 
 		{
@@ -107,5 +110,16 @@ namespace ClientNamespace
 		private string opponent = null;
 		private List<string> challenges = new List<string>();
 		private string roomType = "Matchmaking v1.4";
+
+		private void OnUserLeftMessageHandler(string username) {
+			Players.Remove(username);
+
+			OnUserLeftMessage(username);
+		}
+		private void OnUserJoinedMessageHandler(string username) {
+			Players.Add(username);
+
+			OnUserJoinedMessage(username);
+		}
 	}
 }
