@@ -30,7 +30,7 @@ namespace ClientNamespace
             ChatForm = new ChatRoom(userData);
 			ChessForm = new ChessForm(userData, gameData);
 			//ChessForm.Hide();
-			ChessForm.Visible = true;
+			ChessForm.Visible = false;
 			ChatForm.Visible = false;
             
 

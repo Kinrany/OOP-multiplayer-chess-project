@@ -43,7 +43,7 @@ namespace ClientNamespace {
 		private void UserData_OnGameStartedMessage() {
 			//Program.ChessForm = new ChessForm(userData);
 			Program.ChessForm.Show();
-			//Program.ChessForm.Visible = true;
+			Program.ChessForm.Visible = true;
 		}
 
 		private void challengehandler(string username) {
